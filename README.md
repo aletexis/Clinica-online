@@ -1,27 +1,8 @@
-# ClinicaOnline
+# Clínica Online
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+Bienvenidos a la nueva tecnología de Clínica Online. Hemos desarrollado un sistema online para la gestión de turnos y usuarios, tanto para pacientes como especialistas. Como paciente se podrán agendar turnos en un calendario, viendo la disponibilidad del médico especialista, quien tendrá acceso a su cronograma de turnos y podrá ver el historial médico, todo a un click de distancia.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![clinica1](https://user-images.githubusercontent.com/47353421/199838910-1bb4e900-7dae-4423-ad0d-9f7e6e01bb46.JPG)
+![clinica2](https://user-images.githubusercontent.com/47353421/199838929-ec212144-1e1a-4654-8278-c49014f92301.JPG)
+![clinica3](https://user-images.githubusercontent.com/47353421/199838938-f878f7ae-ba27-4da9-8791-daca976cbd73.JPG)
+![clinica4](https://user-images.githubusercontent.com/47353421/199838941-360e6d88-cb4e-4285-85f2-e5ae03673b19.JPG)
