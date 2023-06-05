@@ -17,7 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FastLoginComponent } from './components/fast-login/fast-login.component';
-
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { FastLoginComponent } from './components/fast-login/fast-login.component
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

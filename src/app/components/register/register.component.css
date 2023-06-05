@@ -4,6 +4,21 @@
   background-color: #FFFFFF;
 }
 
+.register-card {
+  max-width: 1000px;
+}
+
+.registration-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.column-divider {
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+}
+
+
 .card-title {
   padding: 0;
   font-size: xx-large;
@@ -12,11 +27,22 @@
   margin-bottom: 40px;
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.margin-right{
+  margin-right: 1rem;
+}
+
 .btn-register {
   width: 200px;
-  margin: 10px;
-  margin-top: 1rem;
+  height: 200px;
+  padding: 3rem;
+  align-items: center;
 }
+
 
 ::ng-deep .mat-focused .mat-form-field-label {
   color: #415464 !important;

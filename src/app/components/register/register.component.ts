@@ -17,12 +17,52 @@ import { DatePipe } from '@angular/common';
 
 export class RegisterComponent implements OnInit {
 
+
+  registrationType: string = "";
+  specialties: string[] = []; 
+  selectedImageName: string = "";
+
+  name = new FormControl('', [Validators.required, Validators.email]);
+  surname = new FormControl('', [Validators.required, Validators.required]);
+  age = new FormControl('', [Validators.required, Validators.email]);
+  dni = new FormControl('', [Validators.required, Validators.required]);
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required, Validators.required]);
+
+  setRegistrationType(type: string) {
+    this.registrationType = type;
+  }
+
+  addSpecialty(specialty: string) {
+    if (specialty) {
+      this.specialties.push(specialty);
+    }
+  }
+
+  removeSpecialty(specialty: string) {
+    const index = this.specialties.indexOf(specialty);
+    if (index !== -1) {
+      this.specialties.splice(index, 1);
+    }
+  }
+
+  onImageSelected(event: any) {
+    const file = event.target.files[0];
+    this.selectedImageName = file ? file.name : "";
+  }
+
+
+
+
+
+
+
   public user: User;
   date = new Date();
   uid = this.getUid();
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
+  // email = new FormControl('', [Validators.required, Validators.email]);
+  // password = new FormControl('', [Validators.required]);
   // confirmedPassword = new FormControl('', [Validators.required]);
 
   constructor(private router: Router, public dialog: MatDialog) {
@@ -53,6 +93,15 @@ export class RegisterComponent implements OnInit {
     return this.password.hasError('') ? 'La contraseña no es válida' : '';
   }
 
+  registerSpecialist() {
+    console.log("hola especialista");
+  }
+
+  registerPatient() {
+    console.log("hola paciente");
+  }
+
+
   register() {
 
     // this.alert('info', 'Verificando credenciales')
@@ -78,6 +127,7 @@ export class RegisterComponent implements OnInit {
       // }
     }
   }
+
 
 
   alert(icon: SweetAlertIcon, text: string) {

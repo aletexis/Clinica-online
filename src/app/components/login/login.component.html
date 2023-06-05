@@ -4,12 +4,6 @@
       <img src="../../../assets/logoClinica.png" class="navbar-img" alt="Logo Clínica Online">
       <h1 class="navbar-title">CLÍNICA ONLINE</h1>
     </div>
-    <!-- <button mat-raised-button (click)="goTo('about-me')" class="btn-link" style="margin: 5px;">Sobre mi</button>
-      <button mat-raised-button (click)="goTo('survey')" class="btn-link" style="margin: 5px;">Encuesta</button> -->
-  </div>
-  <div>
-    <!-- <b class="user-logged">Bienvenido {{token}}</b> -->
-    <button mat-raised-button (click)="goTo('logout')" class="my-btn btn-logout">Salir</button>
   </div>
 </mat-toolbar>
 
@@ -19,7 +13,7 @@
     <h1 class="card-title">INICIAR SESIÓN</h1>
     <p>
       <mat-form-field appearance="outline" class="card-form-field">
-        <mat-label>Correo</mat-label>
+        <mat-label>Correo electrónico</mat-label>
         <input (keyup.enter)="login()" matInput [(ngModel)]="user.email" required>
         <mat-error *ngIf="email.invalid">{{getErrorMessageEmail()}}</mat-error>
       </mat-form-field>
