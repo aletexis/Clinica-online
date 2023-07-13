@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+<br><br><br>
+<div align=center>
+  <mat-card class="animate__animated animate__fadeIn">
+    <h1 class="card-title">USUARIOS</h1>
+    <mat-card-content>
+      <button mat-raised-button class="my-btn" (click)="downloadExcel()">
+        Descargar usuarios
+      </button>
+      <br><br>
+      <div>
+        <div style="column-gap: 5px; row-gap: 5px">
+          <div *ngFor="let user of users" appBorder>
+            <br><br>
+            <div class="profile-container">
+              <div class="profile-image">
+                <img src="{{ user.profileImg }}" alt="Foto de perfil">
+              </div>
+              <div class="profile-data">
+                <h2>{{ user.firstName + " " + user.lastName }}</h2>
+                <p>{{ user.mail }}</p>
+                <p>{{ user.profile === 'admin' ? 'Administrador/a' : (user.profile === 'patient' ? 'Paciente' :
+                  'Especialista') }}</p>
+                <p>{{ user.age + " años" }}</p>
+                <p>DNI: {{ user.dni | dni }}</p>
+                <br><br>
+                <button mat-raised-button class="my-btn" (click)="downloadAppointments(user)">
+                  Descargar turnos
+                </button>
+              </div>
+            </div>
+            <br><br>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

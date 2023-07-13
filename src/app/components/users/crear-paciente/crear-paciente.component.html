@@ -1,0 +1,189 @@
+<app-navbar></app-navbar>
+<div align=center>
+    <br><br><br><br>
+    <mat-card class="animate__animated animate__fadeIn">
+        <h1 class="card-title">REGISTRO PACIENTE</h1>
+        <form [formGroup]="registerPatientForm">
+            <table>
+                <tr>
+                    <td class="column-divider">
+                <tr>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field margin-right">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput formControlName="firstName" required>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['firstName'].errors?.['required'] && registerPatientForm.controls['firstName'].touched">
+                                    El nombre es obligatorio
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['firstName'].errors?.['pattern'] && registerPatientForm.controls['firstName'].touched">
+                                    El nombre es inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field">
+                                <mat-label>Apellido</mat-label>
+                                <input matInput formControlName="lastName" required>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['lastName'].errors?.['required'] && registerPatientForm.controls['lastName'].touched">
+                                    El apellido es obligatorio
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['lastName'].errors?.['pattern'] && registerPatientForm.controls['lastName'].touched">
+                                    El apellido es inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field">
+                                <mat-label>Edad</mat-label>
+                                <input matInput formControlName="age" required>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['age'].errors?.['required'] && registerPatientForm.controls['age'].touched">
+                                    La edad es obligatoria
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['age'].errors?.['min'] && registerPatientForm.controls['age'].touched">
+                                    La edad debe ser mayor o igual a 18 años
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['age'].errors?.['max'] && registerPatientForm.controls['age'].touched">
+                                    La edad debe ser menor o igual a 99 años
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['age'].errors?.['pattern'] && registerPatientForm.controls['age'].touched">
+                                    La edad es inválida
+                                </mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field">
+                                <mat-label>DNI</mat-label>
+                                <input matInput formControlName="dni" required>
+                                <mat-error
+                                    *ngIf="registerPatientForm.controls['dni'].errors?.['required'] && registerPatientForm.controls['dni'].touched">
+                                    El DNI es obligatorio
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="(registerPatientForm.controls['dni'].errors?.['pattern'] || registerPatientForm.controls['dni'].errors?.['minlength'] || registerPatientForm.controls['dni'].errors?.['maxlength']) && registerPatientForm.controls['dni'].touched">
+                                    El DNI es inválido
+                                </mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                </tr>
+                </td>
+                <td class="column-divider" style="min-width: 300px;">
+                    <tr>
+                        <td>
+                            <p>
+                                <mat-form-field appearance="outline" class="card-form-field">
+                                    <mat-label>Obra social</mat-label>
+                                    <input matInput formControlName="healthcareProvider" required>
+                                    <mat-error
+                                        *ngIf="registerPatientForm.controls['healthcareProvider'].errors?.['required'] && registerPatientForm.controls['healthcareProvider'].touched">
+                                        La obra social es obligatoria
+                                    </mat-error>
+                                </mat-form-field>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="image-upload">
+                                <button mat-raised-button class="my-secondary-btn" (click)="selectImage()"
+                                    [disabled]="!openImageSelector">
+                                    <mat-icon>image</mat-icon>ㅤSubir imagen
+                                </button>
+                                <p class="selected-image-name">{{ selectedImageName }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <br>
+                    <tr>
+                        <td colspan="2">
+                            <div class="image-upload">
+                                <button mat-raised-button class="my-secondary-btn" (click)="selectImage2()"
+                                    [disabled]="!openImageSelector">
+                                    <mat-icon>image</mat-icon>ㅤSubir imagen secundaria
+                                </button>
+                                <p class="selected-image-name">{{ selectedImageName2 }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                </td>
+
+                <td class="column-divider column-divider-left">
+                    <tr>
+                        <td colspan="2">
+                            <p>
+                                <mat-form-field appearance="outline" class="card-form-field">
+                                    <mat-label>Correo electrónico</mat-label>
+                                    <input matInput formControlName="mail" required>
+                                    <mat-error
+                                        *ngIf="registerPatientForm.controls['mail'].errors?.['required'] && registerPatientForm.controls['mail'].touched">
+                                        El correo es obligatorio
+                                    </mat-error>
+                                    <mat-error
+                                        *ngIf="registerPatientForm.controls['mail'].errors?.['email'] && registerPatientForm.controls['mail'].touched">
+                                        El correo es inválido
+                                    </mat-error>
+                                </mat-form-field>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p>
+                                <mat-form-field appearance="outline" class="card-form-field">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input matInput type="password" formControlName="password" required>
+                                    <mat-error
+                                        *ngIf="registerPatientForm.controls['password'].errors?.['required'] && registerPatientForm.controls['password'].touched">
+                                        La contraseña es obligatoria
+                                    </mat-error>
+                                </mat-form-field>
+                            </p>
+                        </td>
+                    </tr>
+                </td>
+                </tr>
+                <br><br><br>
+                <tr>
+                    <td align=center>
+                        <app-captcha (captchaValidated)="updateCaptchaValidity($event)"></app-captcha>
+
+                    </td>
+                    <td colspan="2" align=center>
+                        <table>
+                            <tr>
+                                <td>
+                                    <button mat-raised-button class="my-btn btn-register" (click)="register()">
+                                        Registrarse
+                                    </button>
+                                </td>
+                            </tr>
+                            <br><br>
+                            <tr>
+                                <td>
+                                    <a class="link" routerLink="/register">Registrarse con otro rol de usuario</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </mat-card>
+</div>

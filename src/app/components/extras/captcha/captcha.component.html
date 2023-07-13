@@ -1,0 +1,19 @@
+<mat-card class="captcha-card">
+    <div class="captcha-background">
+        <div class="captcha-code">{{ captchaCode }}</div>
+    </div>
+    <mat-card-content class="captcha-actions">
+        <mat-form-field appearance="outline" class="captcha-form-field">
+            <input matInput class="captcha-input" type="text" [(ngModel)]="userInput" required>
+        </mat-form-field>
+        <button mat-raised-button class="my-btn captcha-submit" (click)="validateCaptcha()"
+            [disabled]="!userInput">Validar</button>
+        <button class="captcha-refresh" (click)="generateCaptcha()">
+            <mat-icon class="captcha-refresh-icon">refresh</mat-icon>
+        </button>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-error *ngIf="captchaInvalid">Captcha inválido</mat-error>
+        <span *ngIf="captchaValid" class="green-text">Captcha válido</span>
+    </mat-card-actions>
+</mat-card>

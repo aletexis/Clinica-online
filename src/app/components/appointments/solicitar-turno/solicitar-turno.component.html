@@ -1,0 +1,53 @@
+<app-navbar></app-navbar>
+<br><br><br>
+<div align=center>
+  <mat-card class="animate__animated animate__fadeIn">
+    <h1 class="card-title">NUEVO TURNO</h1>
+    <mat-card-content>
+
+      <div>
+        <h1 class="card-subtitle">¿QUÉ ESPECIALIDAD?</h1>
+        <div *ngFor="let specialty of specialties" class="boton">
+          <img src="{{ specialty.image }}" alt="{{ specialty.name }}" height="200px" width="200px"
+            (click)="chooseSpecialty(specialty)" />
+        </div>
+      </div>
+      <br><br>
+      <div [hidden]="specialty === null">
+        <h1 class="card-subtitle">¿QUÉ ESPECIALISTA?</h1>
+        <div *ngFor="let specialist of filteredSpecialists" class="boton">
+          <h6 style="text-align: center" class="mt-2">{{ specialist.firstName }}</h6>
+          <img src="{{ specialist.profileImg }}" alt="{{ specialist.firstName }}" width="100%"
+            (click)="chooseSpecialist(specialist)" />
+        </div>
+      </div>
+      <br><br>
+      <div [hidden]="schedules === null && specialist === null">
+        <h1 class="card-subtitle">¿QUÉ HORARIO?</h1>
+        <div *ngIf="schedules! !== null">
+          <div *ngFor="let schedule of schedules">
+            <div class="card text-center" style="vertical-align: middle; cursor: pointer"
+              (click)="chooseSchedule(schedule)">
+              <p class="m-1">
+                {{ schedule.day + "/" + schedule.month + " " + schedule.hour + ":" + schedule.minute }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div [hidden]="schedule === null">
+        <button mat-raised-button class="my-btn" (click)="acceptAppointment()">
+          Agrendar turno
+        </button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+<router-outlet></router-outlet>
+
+<div class="container" style="max-width: 500px">
+
+
+
+</div>

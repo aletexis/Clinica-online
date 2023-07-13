@@ -1,0 +1,33 @@
+<br><br><br>
+<div align=center>
+  <mat-card class="animate__animated animate__fadeIn">
+    <mat-card-content>
+      <div *ngIf="medicalRecord">
+        <div class="profile-container">
+          <div class="profile-image">
+            <img class="favImg fav" src="{{ medicalRecord.patient.profileImg }}" alt="Foto de perfil" height="200px"
+              width="200px">
+          </div>
+          <div class="profile-data">
+            <br>
+            <h2>{{ medicalRecord.patient.firstName + " " + medicalRecord.patient.lastName }}</h2>
+            <br>
+            <p>Altura: {{ medicalRecord.height | altura }}</p>
+            <p>Peso: {{ medicalRecord.weight + " kg." }}</p>
+            <p>Temperatura: {{ medicalRecord.temperature | temp }}</p>
+            <p>Presión: {{ medicalRecord.pressure }}</p>
+            <br>
+            <!-- <div *ngFor="let other of medicalRecord.other">
+              <p>{{ other.key + ": " + other.value }}</p>
+            </div> -->
+            <br>
+            <button mat-raised-button class="my-btn" (click)="descargarTurnos(medicalRecord.patient)">
+              Descargar turnos
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<router-outlet></router-outlet>

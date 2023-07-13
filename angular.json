@@ -1,16 +1,13 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "ea960e27-94ab-4384-a93c-54ec214f2cfd"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Clinica-online": {
+    "SPLabo4": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
+        "@schematics/angular:component": {
+          "style": "scss"
         }
       },
       "root": "",
@@ -20,17 +17,18 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/clinica-online",
+            "outputPath": "dist/splabo4",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -39,13 +37,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3gb",
+                  "maximumError": "3gb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "3gb",
+                  "maximumError": "3gb"
                 }
               ],
               "fileReplacements": [
@@ -71,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Clinica-online:build:production"
+              "browserTarget": "SPLabo4:build:production"
             },
             "development": {
-              "browserTarget": "Clinica-online:build:development"
+              "browserTarget": "SPLabo4:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Clinica-online:build"
+            "browserTarget": "SPLabo4:build"
           }
         },
         "test": {
@@ -92,18 +90,31 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "SPLabo4:build:production",
+            "firebaseProject": "clinica-online-lab-4",
+            "firebaseHostingSite": "clinica-online-lab-4"
           }
         }
       }
     }
   },
-  "defaultProject": "Clinica-online"
+  "cli": {
+    "analytics": false
+  }
 }

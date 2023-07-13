@@ -1,0 +1,136 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #737F85;
+  margin: 0;
+}
+
+.my-navbar {
+  justify-content: space-between;
+  background-color: #FFFFFF;
+}
+
+.navbar-logo {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.navbar-img {
+  height: auto;
+  width: 3rem;
+  padding: 0.8rem;
+}
+
+.navbar-title {
+  font-size: 20px;
+  color: #415464;
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: bold !important;
+}
+
+.animate__fadeIn {
+  max-width: 600px;
+  background-color: #FFFFFF;
+}
+
+.card-title {
+  padding: 0;
+  font-size: xx-large;
+  font-weight: bold;
+  color: #415464;
+  margin-bottom: 40px;
+}
+
+.card-subtitle {
+  padding: 0;
+  font-size: medium;
+  font-weight: bold;
+  color: #415464;
+  margin-bottom: 40px;
+}
+
+.my-btn {
+  background-color: #EE7734;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+button.mat-raised-button:hover {
+  background-color: #ED691D;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+.my-secondary-btn {
+  background-color: #737F85;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+button.mat-raised-button.my-secondary-btn:hover {
+  background-color: #687378;
+}
+
+.btn-dashboard-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.top-buttons,
+.bottom-buttons {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.btn-dashboard {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 200px !important;
+  height: 200px !important;
+  margin: 10px !important;
+  border-radius: 10px !important;
+}
+
+.btn-image {
+  width: 80px !important;
+  height: 80px !important;
+  margin-bottom: 10px !important;
+}
+
+.btn-red {
+  background-color: #c62828 !important;
+}
+
+.btn-green {
+  background-color: #2e7d32 !important;
+}
+
+button.mat-raised-button.btn-red:hover {
+  background-color: #b71c1c;
+}
+
+button.mat-raised-button.btn-green:hover {
+  background-color: #1b5e20;
+}

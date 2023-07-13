@@ -1,0 +1,70 @@
+.animate__fadeIn {
+  max-width: 400px;
+}
+
+.registration-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.column-divider {
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.margin-right{
+  margin-right: 1rem;
+}
+
+.btn-register {
+  width: 200px;
+  height: 200px;
+  padding: 3rem;
+  align-items: center;
+}
+
+
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #415464 !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #415464 !important;
+}
+
+::ng-deep .mat-form-field-outline {
+  color: #415464 !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-outline {
+  color: #ED691D !important;
+}
+
+.column-divider {
+  border-right: 0.5px solid lightgray;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.column-divider-left {
+  border-right: none;
+}
+
+.row-divider {
+  border-top: 0.5px solid lightgray;
+  padding-top: 2rem;
+}
+
+.row-divider-bottom {
+  padding-bottom: 2rem;
+}
+
+
+.selected-image-name {
+  font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
+}

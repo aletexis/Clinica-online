@@ -1,0 +1,23 @@
+<h1 class="card-subtitle">HISTORIAL DE INGRESOS</h1>
+<button mat-raised-button class="my-btn" (click)="displayLogHistory = !displayLogHistory">
+  {{ displayLogHistory ? "Ocultar historial" : "Ver historial" }}
+</button>
+<span class="button-spacing"></span>
+<button mat-raised-button class="my-btn" (click)="downloadLoginHistory()">
+  Descargar historial
+</button>
+<div *ngIf="displayLogHistory">
+  <mat-list>
+    <mat-list-item *ngFor="let login of loginHistory">
+      <div class="item-content">
+        <div mat-line>{{ login.datetime.toDate().toLocaleString() + " - " + login.user }}</div>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <div *ngIf="loginHistory.length === 0">
+    <br><br>
+    <p>No hay registros para mostrar</p>
+  </div>
+</div>
+<br><br>

@@ -1,0 +1,77 @@
+.animate__fadeIn {
+  max-width: 1200px;
+}
+
+.registration-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row-divider {
+  border-top: 0.5px solid lightgray;
+  padding-top: 2rem;
+}
+
+.column-divider {
+  border-right: 0.5px solid lightgray;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.column-divider-left {
+  border-right: none;
+}
+
+.selected-image-name {
+  font-size: 12px;
+}
+
+.image-upload {
+  display: flex;
+  align-items: center;
+}
+
+.image-upload button {
+  margin-right: 10px;
+}
+
+.image-upload .selected-image-name {
+  margin: 0;
+}
+
+.margin-right {
+  margin-right: 1rem;
+}
+
+.btn-register {
+  width: 17rem;
+}
+
+.link {
+  color: #ED691D;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #415464 !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #415464 !important;
+}
+
+::ng-deep .mat-form-field-outline {
+  color: #415464 !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-outline {
+  color: #ED691D !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  background-color: #ED691D !important;
+}

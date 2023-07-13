@@ -1,0 +1,53 @@
+<app-navbar></app-navbar>
+<br><br><br>
+<div align=center>
+  <mat-card class="animate__animated animate__fadeIn">
+    <h1 class="card-title">USUARIOS</h1>
+    <mat-card-content>
+      <div class="btn-dashboard-container">
+        <div class="top-buttons">
+          <button mat-icon-button class="my-btn btn-dashboard orange-button"
+            (click)="goTo('dashboard-admin/users/view-users')">
+            <img src="../../../assets/users.png" alt="Ver usuarios" class="btn-image">
+            <br>
+            <p>Ver usuarios</p>
+          </button>
+          <button mat-icon-button class="my-btn btn-dashboard orange-button"
+            (click)="goTo('dashboard-admin/users/view-medical-records')">
+            <img src="../../../assets/medical-record.png" alt="Ver historias" class="btn-image">
+            <br>
+            <p>Ver historias</p>
+          </button>
+          <button mat-icon-button class="my-btn btn-dashboard orange-button"
+            (click)="goTo('dashboard-admin/users/enable-specialists')">
+            <img src="../../../assets/add.png" alt="Habilitar especialistas" class="btn-image">
+            <br>
+            <p>Habilitar especialistas</p>
+          </button>
+        </div>
+        <div class="bottom-buttons">
+
+          <button mat-icon-button class="my-btn btn-dashboard orange-button"
+            (click)="goTo('dashboard-admin/users/create-admin')">
+            <img src="../../../assets/admin.png" alt="Registrar administradores" class="btn-image">
+            <br>
+            <p>Registrar administradores</p>
+          </button>
+          <button mat-icon-button class="my-btn btn-dashboard orange-button"
+            (click)="goTo('dashboard-admin/users/create-specialist')">
+            <img src="../../../assets/doctor.png" alt="Registrar especialistas" class="btn-image">
+            <br>
+            <p>Registrar especialistas</p>
+          </button>
+          <button mat-icon-button class="my-btn btn-dashboard orange-button"
+            (click)="goTo('register-patient')">
+            <img src="../../../assets/person.png" alt="Registrar pacientes" class="btn-image">
+            <br>
+            <p>Registrar pacientes</p>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<router-outlet></router-outlet>

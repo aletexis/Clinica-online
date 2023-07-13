@@ -1,0 +1,164 @@
+<div class="container adaptar mt-3" style="max-width: 500px">
+  <form [formGroup]="forma" (ngSubmit)="agregarHistoria()">
+    <h1>Finalizar turno</h1>
+
+    <!--Diagnostico-->
+    <div class="form-group">
+      <p class="mb-1 mt-3">Diagnostico</p>
+      <input formControlName="diagnostico" class="form-control" />
+      <div class="invalid">
+        <small
+          class="invalid"
+          *ngIf="
+            forma.controls['diagnostico'].errors !== null &&
+            forma.controls['diagnostico'].touched
+          "
+        >
+          El diagnóstico es requerido
+        </small>
+      </div>
+    </div>
+
+    <h3>Datos estáticos</h3>
+    <!--Altura-->
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <p class="mb-1 mt-3">Altura</p>
+          <input type="number" formControlName="altura" class="form-control" />
+          <div class="invalid">
+            <small
+              class="invalid"
+              *ngIf="
+                forma.controls['altura'].errors !== null &&
+                forma.controls['altura'].touched
+              "
+            >
+              La altura no es correcta
+            </small>
+          </div>
+        </div>
+      </div>
+      <!--Peso-->
+      <div class="col-6">
+        <div class="form-group">
+          <p class="mb-1 mt-3">Peso</p>
+          <input type="number" formControlName="peso" class="form-control" />
+          <div class="invalid">
+            <small
+              class="invalid"
+              *ngIf="
+                forma.controls['peso'].errors !== null &&
+                forma.controls['peso'].touched
+              "
+            >
+              El peso no es correcto
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Temperatura-->
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <p class="mb-1 mt-3">Temperatura</p>
+          <input
+            type="number"
+            formControlName="temperatura"
+            class="form-control"
+          />
+          <div class="invalid">
+            <small
+              class="invalid"
+              *ngIf="
+                forma.controls['temperatura'].errors !== null &&
+                forma.controls['temperatura'].touched
+              "
+            >
+              La temperatura no es correcta
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <!--Presión-->
+        <div class="form-group">
+          <p class="mb-1 mt-3">Presión</p>
+          <input type="number" formControlName="presion" class="form-control" />
+          <div class="invalid">
+            <small
+              class="invalid"
+              *ngIf="
+                forma.controls['presion'].errors !== null &&
+                forma.controls['presion'].touched
+              "
+            >
+              La presión no es correcta
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Clave y Valor-->
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <p class="mb-1 mt-3">Clave</p>
+          <input formControlName="clave" class="form-control" />
+          <div class="invalid">
+            <small
+              class="invalid"
+              *ngIf="
+                forma.controls['clave'].errors !== null &&
+                forma.controls['clave'].touched
+              "
+            >
+              La clave no es correcta
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <p class="mb-1 mt-3">Valor</p>
+          <input formControlName="valor" class="form-control" />
+          <div class="invalid">
+            <small
+              class="invalid"
+              *ngIf="
+                forma.controls['valor'].errors !== null &&
+                forma.controls['valor'].touched
+              "
+            >
+              La clave no es correcta
+            </small>
+          </div>
+        </div>
+      </div>
+      <!--Comentario-->
+
+      <div class="form-group">
+        <p class="mb-1 mt-3">Comentario</p>
+        <input formControlName="comentario" class="form-control" />
+        <div class="invalid">
+          <small
+            class="invalid"
+            *ngIf="
+              forma.controls['comentario'].errors !== null &&
+              forma.controls['comentario'].touched
+            "
+          >
+            El comentario es requerido
+          </small>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mt-5 mb-5" [disabled]="!forma.valid">
+          Finalizar turno
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

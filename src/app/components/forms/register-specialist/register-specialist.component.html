@@ -1,0 +1,154 @@
+<app-navbar></app-navbar>
+<div align=center>
+    <br><br><br><br>
+    <mat-card class="animate__animated animate__fadeIn">
+        <h1 class="card-title">REGISTRO ESPECIALISTA</h1>
+        <form [formGroup]="registerSpecialistForm" (ngSubmit)="register()">
+            <table>
+                <tr>
+
+                    <td class="column-divider">
+                <tr>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field margin-right">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput formControlName="firstName" required>
+                                <mat-error *ngIf="
+                                        registerSpecialistForm.controls['firstName'].errors !== null &&
+                                        registerSpecialistForm.controls['firstName'].touched
+                                      ">El nombre es obligatorio</mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field">
+                                <mat-label>Apellido</mat-label>
+                                <input matInput formControlName="lastName" required>
+                                <mat-error *ngIf="
+                                        registerSpecialistForm.controls['lastName'].errors !== null &&
+                                        registerSpecialistForm.controls['lastName'].touched
+                                      ">El apellido es obligatorio</mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field">
+                                <mat-label>Edad</mat-label>
+                                <input matInput formControlName="age" required>
+                                <mat-error *ngIf="
+                                        registerSpecialistForm.controls['age'].errors !== null &&
+                                        registerSpecialistForm.controls['age'].touched
+                                      ">La edad es obligatoria</mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <mat-form-field appearance="outline" class="card-form-field">
+                                <mat-label>DNI</mat-label>
+                                <input matInput formControlName="dni" required>
+                                <mat-error *ngIf="
+                                        registerSpecialistForm.controls['dni'].errors !== null &&
+                                        registerSpecialistForm.controls['dni'].touched
+                                      ">El DNI es obligatorio</mat-error>
+                            </mat-form-field>
+                        </p>
+                    </td>
+                </tr>
+                </td>
+                <td class="column-divider" style="min-width: 300px;">
+                    <tr>
+                        <td colspan="2">
+                            <p>
+                                <mat-chip-list #chipList>
+                                    <mat-chip *ngFor="let specialty of specialties" [removable]="true"
+                                        (removed)="removeSpecialty(specialty)">
+                                        {{ specialty }}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <br>
+                                <mat-form-field class="input-field">
+                                    <input matInput placeholder="Especialidad" #specialtyInput
+                                        (keyup.enter)="addSpecialty(specialtyInput.value); specialtyInput.value = ''"
+                                        (focus)="openImageSelector = false" (blur)="openImageSelector = true">
+                                </mat-form-field>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="image-upload">
+                                <button mat-raised-button class="my-secondary-btn" (click)="selectImage()"
+                                    [disabled]="!openImageSelector">
+                                    <mat-icon>image</mat-icon>ㅤSubir imagen
+                                </button>
+                                <p class="selected-image-name">{{ selectedImageName }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                </td>
+
+                <td class="column-divider column-divider-left">
+                    <tr>
+                        <td colspan="2">
+                            <p>
+                                <mat-form-field appearance="outline" class="card-form-field">
+                                    <mat-label>Correo electrónico</mat-label>
+                                    <input matInput formControlName="mail" required>
+                                    <mat-error *ngIf="
+                                        registerSpecialistForm.controls['mail'].errors !== null &&
+                                        registerSpecialistForm.controls['mail'].touched
+                                      ">La contraseña es obligatoria</mat-error>
+                                </mat-form-field>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p>
+                                <mat-form-field appearance="outline" class="card-form-field">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input type="password" matInput formControlName="password" required>
+                                    <mat-error *ngIf="
+                                        registerSpecialistForm.controls['password'].errors !== null &&
+                                        registerSpecialistForm.controls['password'].touched
+                                      ">La contraseña es obligatoria</mat-error>
+                                </mat-form-field>
+                            </p>
+                        </td>
+                    </tr>
+                </td>
+                </tr>
+                <br><br>
+                <tr>
+                    <td align=center>
+                        <app-captcha (captchaValidated)="updateCaptchaValidity($event)"></app-captcha>
+                    </td>
+                    <td colspan="2" align=center>
+                        <table>
+                            <tr>
+                                <td>
+                                    <button mat-raised-button class="my-btn btn-register" (click)="register()">
+                                        Registrarse
+                                    </button>
+                                </td>
+                            </tr>
+                            <br><br>
+                            <tr>
+                                <td>
+                                    <a class="link" routerLink="/register">Registrarse con otro rol de usuario</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </mat-card>
+</div>
