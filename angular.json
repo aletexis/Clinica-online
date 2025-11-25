@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "SPLabo4": {
+    "clinica-online": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,106 +15,87 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/splabo4",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
               "src/styles.scss"
-            ],
-            "scripts": []
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3gb",
-                  "maximumError": "3gb"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "3gb",
-                  "maximumError": "3gb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "SPLabo4:build:production"
+              "buildTarget": "clinica-online:build:production"
             },
             "development": {
-              "browserTarget": "SPLabo4:build:development"
+              "buildTarget": "clinica-online:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "SPLabo4:build"
-          }
+          "builder": "@angular/build:extract-i18n"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
               "src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {
-            "prerender": false,
-            "ssr": false,
-            "browserTarget": "SPLabo4:build:production",
-            "firebaseProject": "clinica-online-lab-4",
-            "firebaseHostingSite": "clinica-online-lab-4"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": "6b1573b6-de3a-400d-9dc6-cf6fa9b99798"
   }
 }
