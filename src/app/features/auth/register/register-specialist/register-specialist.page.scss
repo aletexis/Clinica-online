@@ -1,0 +1,36 @@
+mat-card {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.form-row {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.file-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.file-field input[type="file"] {
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 0.3rem;
+	font-size: 0.85rem;
+}
+
+:host ::ng-deep mat-chip-grid {
+	display: block;
+	overflow-x: auto !important;
+	overflow-y: hidden;
+	white-space: nowrap;
+	padding: 4px 0;
+	scrollbar-width: thin;
+}

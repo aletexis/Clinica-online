@@ -1,0 +1,73 @@
+mat-card {
+	width: 100%;
+	// min-width: 600px;
+	max-width: 1400px;
+	margin: 0 auto;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.carousel-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.profile-img {
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid #EE7734;
+}
+
+.arrow-btn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: transparent;
+	border: none;
+	font-size: 2.2rem;
+	cursor: pointer;
+	padding: 0 10px;
+	transition: 0.2s;
+	color: #737F85;
+
+	&.left {
+		left: 0;
+	}
+
+	&.right {
+		right: 0;
+	}
+
+	&:hover {
+		transform: translateY(-50%) scale(1.1);
+	}
+}
+
+.dots {
+	margin-top: 10px;
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+
+	.dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: #555;
+		cursor: pointer;
+		transition: 0.25s;
+
+		&.active {
+			background: #737F85;
+			transform: scale(1.2);
+		}
+	}
+}
+
+.card-title {
+	color: #737F85;
+}

@@ -1,0 +1,30 @@
+.button-container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 40px;
+	justify-items: center;
+	align-items: center;
+
+	@media (max-width: 992px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 600px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.btn-register {
+	width: 200px;
+	height: 200px;
+	border-radius: 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}

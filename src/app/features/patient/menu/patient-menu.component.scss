@@ -1,0 +1,16 @@
+.button-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 50px;
+}
+
+.btn-register {
+	width: 200px;
+	height: 200px;
+	border-radius: 10%;
+	transition: all 0.2s ease;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+}

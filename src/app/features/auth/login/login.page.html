@@ -1,0 +1,44 @@
+<mat-card class="p-5 animate__animated animate__slideInRight" *ngIf="authReady">
+	<h1 class="app-text-primary fw-bold text-uppercase text-center mb-5">Iniciar sesión</h1>
+
+	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+		<mat-form-field appearance="outline" class="w-100 mb-4">
+			<mat-label>Correo electrónico</mat-label>
+			<input matInput formControlName="email" type="email">
+			<mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+				Este campo es obligatorio
+			</mat-error>
+			<mat-error
+				*ngIf="!loginForm.get('email')?.hasError('required') && loginForm.get('email')?.hasError('invalidEmail')">
+				Ingresá un correo válido
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="w-100 mb-4">
+			<mat-label>Contraseña</mat-label>
+			<input matInput formControlName="password" type="password">
+			<mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+				Este campo es obligatorio
+			</mat-error>
+			<mat-error
+				*ngIf="!loginForm.get('password')?.hasError('required') && loginForm.get('password')?.hasError('minlength')">
+				Mínimo 6 caracteres
+			</mat-error>
+		</mat-form-field>
+
+		<button mat-flat-button color="primary" type="submit" class="w-100 mt-2" [disabled]="loginForm.invalid">
+			Ingresar
+		</button>
+	</form>
+</mat-card>
+
+<mat-card class="mt-4 animate__animated animate__slideInLeft" *ngIf="quickUsers.length > 0">
+	<div class="quick-access p-3 text-center">
+		<div class="d-flex justify-content-center flex-wrap gap-3">
+			<button *ngFor="let user of quickUsers" mat-icon-button class="quick-user-btn"
+				[ngStyle]="{ borderColor: getBorderColor(user.role) }" (click)="autoFillFields(user.email, user.password)">
+				<img [src]="user.profileImgs?.[0]" [alt]="user.firstName" class="quick-user-img" />
+			</button>
+		</div>
+	</div>
+</mat-card>

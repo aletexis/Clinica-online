@@ -1,0 +1,36 @@
+<div class="decorative-images">
+	<img src="images/cardiology.jpg" class="bubble bubble1" alt="">
+	<img src="images/dermatology.jpg" class="bubble bubble2" alt="">
+	<img src="images/odontology.jpg" class="bubble bubble3" alt="">
+	<img src="images/radiology.jpg" class="bubble bubble4" alt="">
+</div>
+
+<mat-card class="animate__animated animate__slideInDown p-5 text-center">
+	<h1 class="card-title fw-bold text-uppercase app-text-primary mb-3">
+		Clínica Online
+	</h1>
+
+	<img class="d-block mx-auto m-4" src="images/logoClinica.png" alt="Logo Clínica Online" width="180" height="180">
+
+	<div class="mb-2" *ngIf="!loggedInUser">
+		<button matButton="filled" class="my-2 mx-2" (click)="goTo('inicio-sesion')">
+			Iniciar sesión
+		</button>
+		<button matButton="filled" class="my-2 mx-2" (click)="goTo('registro')">
+			Registrarse
+		</button>
+	</div>
+
+	<hr class="my-4 opacity-25" />
+
+	<p class="fs-5 text-light-emphasis">
+		En <strong>Clínica Online</strong> combinamos la tecnología con la atención médica
+		personalizada. Contamos con consultorios equipados, laboratorios propios y un equipo de profesionales de distintas
+		especialidades, comprometidos con tu salud.
+	</p>
+
+	<p class="fs-5 text-light-emphasis">
+		Nuestros horarios de atención son de <strong>lunes a viernes de 8:00 a 19:00 h</strong> y
+		<strong>sábados de 8:00 a 14:00 h</strong>.
+	</p>
+</mat-card>

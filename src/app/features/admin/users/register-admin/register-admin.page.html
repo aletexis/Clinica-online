@@ -1,0 +1,133 @@
+<mat-card class="p-4 animate__animated animate__slideInRight">
+	<h1 class="app-text-primary fw-bold text-uppercase text-center mb-3 fs-4">
+		Registro de Administrador
+	</h1>
+
+	<mat-card-content>
+		<mat-horizontal-stepper orientation="vertical" [linear]="isLinear" #stepper>
+
+			<mat-step [stepControl]="personalForm">
+				<form [formGroup]="personalForm">
+					<ng-template matStepLabel>Datos personales</ng-template>
+
+					<div class="form-row mt-2 gap-3">
+						<mat-form-field appearance="outline" class="flex-1">
+							<mat-label>Nombre</mat-label>
+							<input matInput formControlName="firstName">
+							<mat-error *ngIf="personalForm.get('firstName')?.hasError('required')">
+								Este campo es obligatorio
+							</mat-error>
+							<mat-error *ngIf="!personalForm.get('firstName')?.hasError('required') &&
+                                personalForm.get('firstName')?.hasError('onlyLetters')">
+								Solo se permiten letras
+							</mat-error>
+							<mat-error *ngIf="personalForm.get('firstName')?.hasError('maxlength')">
+								Máximo 100 caracteres
+							</mat-error>
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="flex-1">
+							<mat-label>Apellido</mat-label>
+							<input matInput formControlName="lastName">
+							<mat-error *ngIf="personalForm.get('lastName')?.hasError('required')">
+								Este campo es obligatorio
+							</mat-error>
+							<mat-error *ngIf="!personalForm.get('lastName')?.hasError('required') &&
+                                personalForm.get('lastName')?.hasError('onlyLetters')">
+								Solo se permiten letras
+							</mat-error>
+							<mat-error *ngIf="personalForm.get('lastName')?.hasError('maxlength')">
+								Máximo 100 caracteres
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="form-row gap-3">
+						<mat-form-field appearance="outline" class="flex-1">
+							<mat-label>Edad</mat-label>
+							<input matInput type="number" formControlName="age">
+							<mat-error *ngIf="personalForm.get('age')?.hasError('required')">
+								Este campo es obligatorio
+							</mat-error>
+							<mat-error *ngIf="!personalForm.get('age')?.hasError('required') &&
+                                personalForm.get('age')?.hasError('invalidAge')">
+								Ingresá una edad válida
+							</mat-error>
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="flex-1">
+							<mat-label>DNI</mat-label>
+							<input matInput formControlName="dni">
+							<mat-error *ngIf="personalForm.get('dni')?.hasError('required')">
+								Este campo es obligatorio
+							</mat-error>
+							<mat-error *ngIf="!personalForm.get('dni')?.hasError('required') &&
+                                personalForm.get('dni')?.hasError('invalidDni')">
+								DNI inválido (debe tener 8 números)
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="d-flex justify-content-end mt-2">
+						<button mat-button matStepperNext>Siguiente</button>
+					</div>
+				</form>
+			</mat-step>
+
+			<mat-step [stepControl]="credentialsForm">
+				<form [formGroup]="credentialsForm">
+					<ng-template matStepLabel>Datos de acceso</ng-template>
+
+					<div class="form-row mt-2 gap-3">
+						<mat-form-field appearance="outline" class="flex-1">
+							<mat-label>Correo electrónico</mat-label>
+							<input matInput formControlName="email" type="email">
+							<mat-error *ngIf="credentialsForm.get('email')?.hasError('required')">
+								Este campo es obligatorio
+							</mat-error>
+							<mat-error *ngIf="!credentialsForm.get('email')?.hasError('required') &&
+                                credentialsForm.get('email')?.hasError('invalidEmail')">
+								Ingresá un correo válido
+							</mat-error>
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="flex-1">
+							<mat-label>Contraseña</mat-label>
+							<input matInput formControlName="password" type="password">
+							<mat-error *ngIf="credentialsForm.get('password')?.hasError('required')">
+								Este campo es obligatorio
+							</mat-error>
+							<mat-error *ngIf="!credentialsForm.get('password')?.hasError('required') &&
+                                credentialsForm.get('password')?.hasError('minlength')">
+								Mínimo 6 caracteres
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="form-row gap-3">
+						<div class="flex-1 file-field">
+							<label for="profileImg">Foto de perfil *</label>
+							<input type="file" id="profileImg" (change)="onFileChange($event, 'profileImg')" />
+
+							<mat-error *ngIf="credentialsForm.get('profileImg')?.hasError('required')" style="font-size: 12px;">
+								Este campo es obligatorio
+							</mat-error>
+							<mat-error *ngIf="credentialsForm.get('profileImg')?.hasError('invalidType')" style="font-size: 12px;">
+								Solo se permiten imágenes PNG, JPG o JPEG
+							</mat-error>
+							<mat-error *ngIf="credentialsForm.get('profileImg')?.hasError('maxSizeExceeded')"
+								style="font-size: 12px;">
+								La imagen no debe superar los 2MB
+							</mat-error>
+						</div>
+					</div>
+
+					<div class="d-flex justify-content-between mt-3">
+						<button mat-button matStepperPrevious>Atrás</button>
+						<button mat-flat-button color="primary" (click)="submit()">Registrarse</button>
+					</div>
+				</form>
+			</mat-step>
+		</mat-horizontal-stepper>
+	</mat-card-content>
+</mat-card>

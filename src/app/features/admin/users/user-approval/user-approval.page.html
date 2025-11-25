@@ -1,0 +1,36 @@
+<mat-card class="p-4 animate__animated animate__fadeIn">
+	<h1 class="app-text-primary fw-bold text-center text-uppercase mb-4">
+		Aprobación de Especialistas
+	</h1>
+
+	<table class="table table-striped text-center align-middle">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Correo electrónico</th>
+				<th>Edad</th>
+				<th>DNI</th>
+				<th>Especialidades</th>
+				<th>Aprobado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let user of specialists">
+				<td>{{ user.firstName }} {{ user.lastName }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.age }}</td>
+				<td>{{ user.dni }}</td>
+				<td>{{ user.specialtyNames.join(', ') }}</td>
+				<td>
+					<mat-slide-toggle color="primary" [checked]="user.approved" [disabled]="updatingId === user.uid"
+						(change)="toggleApproval(user)">
+					</mat-slide-toggle>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div *ngIf="!specialists.length" class="text-center mt-4">
+		<p>No hay especialistas registrados</p>
+	</div>
+</mat-card>

@@ -1,0 +1,60 @@
+<div class="week-grid">
+	<div *ngFor="let d of days" class="day-card">
+		<div class="app-text-primary fs-5 fw-bold text-center mb-3">
+			{{ d.day }}
+		</div>
+		<div class="ranges">
+			<div *ngFor="let r of d.ranges; let i = index">
+				<div class="range-row">
+					<div class="inputs-inline">
+						<div class="col">
+							<label>Desde</label>
+							<div class="compact-select">
+								<mat-form-field appearance="outline" [ngClass]="{ 'mat-error-field': errors[d.day][i] }">
+									<mat-select [(ngModel)]="r.start" (selectionChange)="validateRange(d, i)">
+										<mat-option *ngFor="let h of getStartHours(d.day)" [value]="h">
+											{{ h }}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+
+						<div class="col">
+							<label>Hasta</label>
+							<div class="compact-select">
+								<mat-form-field appearance="outline" [ngClass]="{ 'mat-error-field': errors[d.day][i] }">
+									<mat-select [(ngModel)]="r.end" (selectionChange)="validateRange(d, i)">
+										<mat-option *ngFor="let h of getEndHours(d.day)" [value]="h">
+											{{ h }}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+
+					<div class="trash-wrapper" [ngClass]="{ 'has-trash': d.ranges.length > 1 }">
+						<button matButton="tonal" *ngIf="d.ranges.length > 1" class="trash-btn" (click)="removeRange(d, i)">
+							<i class="fas fa-trash"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class="range-error" *ngIf="errors[d.day][i]">
+					{{ errors[d.day][i] }}
+				</div>
+			</div>
+		</div>
+
+		<button mat-button color="primary" class="add-btn mt-3" (click)="addRange(d)">
+			+ Agregar rango
+		</button>
+	</div>
+</div>
+
+<div class="save-row">
+	<button mat-flat-button color="primary" class="mt-5" [disabled]="hasErrors()" (click)="saveAvailability()">
+		Guardar cambios
+	</button>
+</div>

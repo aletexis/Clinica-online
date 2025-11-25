@@ -1,0 +1,37 @@
+<mat-toolbar *ngIf="!hideNavbar" class="app-navbar app-bg-light app-text-primary">
+	<div class="navbar-logo">
+		<img src="/images/logoClinica.png" class="navbar-img" alt="Logo Clínica Online" />
+		<h1 class="fs-5 fw-bold text-uppercase">Clínica Online</h1>
+	</div>
+
+	<div class="navbar-actions" *ngIf="authResolved">
+		<button *ngIf="showBackButton" matButton="tonal" class="mx-3" (click)="goBack()">
+			<i class="fa-solid fa-arrow-left"></i> Volver
+		</button>
+
+		<button *ngIf="showWelcomeButton" matButton="filled" (click)="goTo('bienvenida')" class="fs-6 fw-semibold mx-2">
+			<i class="fa-solid fa-hospital"></i>
+			Bienvenida
+		</button>
+
+		<button *ngIf="showDashboardButton" matButton="filled" (click)="goHome()" class="fs-6 fw-semibold mx-2">
+			<i class="fa-solid fa-house"></i>
+			Mi panel
+		</button>
+
+		<button *ngIf="showLoginButton" matButton="filled" (click)="goTo('inicio-sesion')" class="fs-6 fw-semibold">
+			<i class="fa-solid fa-right-to-bracket"></i>
+			Iniciar sesión
+		</button>
+
+		<button *ngIf="showRegisterButton" matButton="filled" (click)="goTo('registro')" class="fs-6 fw-semibold">
+			<i class="fa-solid fa-user-plus"></i>
+			Registrarse
+		</button>
+
+		<button *ngIf="showLogout" matButton="filled" (click)="logout()" class="fs-6 fw-semibold">
+			<i class="fa-solid fa-arrow-right-from-bracket"></i>
+			Cerrar sesión
+		</button>
+	</div>
+</mat-toolbar>

@@ -1,0 +1,73 @@
+table {
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+th,
+td {
+	vertical-align: middle !important;
+	padding: 0.75rem;
+}
+
+@media (max-width: 768px) {
+	table {
+		font-size: 0.85rem;
+	}
+
+	th {
+		font-size: 0.75rem;
+		padding: 0.5rem;
+	}
+
+	td {
+		padding: 0.5rem;
+	}
+}
+
+@media (max-width: 681px) {
+	table {
+		font-size: 0.65rem;
+	}
+
+	th {
+		font-size: 0.55rem;
+		padding: 0.3rem;
+	}
+
+	td {
+		padding: 0.3rem;
+	}
+}
+
+.btn-space {
+	margin-right: 10px;
+}
+
+.hint-end {
+	display: block;
+	text-align: end;
+}
+
+* {
+	scrollbar-color: #EE7734 transparent;
+	scrollbar-width: thin;
+}
+
+::ng-deep .mdc-dialog--open .mat-mdc-dialog-surface,
+::ng-deep .mdc-dialog--closing .mat-mdc-dialog-surface {
+	padding: 0 24px 0 24px !important;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #EE7734;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}

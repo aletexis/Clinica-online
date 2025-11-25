@@ -1,0 +1,27 @@
+<mat-card class="p-5 animate__animated animate__slideInDown">
+	<h1 class="app-text-primary fw-bold text-uppercase text-center mb-4">
+		Panel de Administrador
+	</h1>
+
+	<div class="button-container m-2">
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('mi-perfil')">
+			<img src="images/my-profile.png" alt="Mi perfil" class="img-white">
+			<h4 class="mt-2">Mi perfil</h4>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('usuarios')">
+			<img src="images/users.png" alt="Usuarios" class="img-white">
+			<h4 class="mt-2">Usuarios</h4>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('estadisticas')">
+			<img src="images/chart.png" alt="Estadísticas" class="img-white">
+			<h4 class="mt-2">Estadísticas</h4>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('turnos')">
+			<img src="images/appointment.png" alt="Turnos" class="img-white">
+			<h4 class="mt-2">Turnos</h4>
+		</button>
+	</div>
+</mat-card>

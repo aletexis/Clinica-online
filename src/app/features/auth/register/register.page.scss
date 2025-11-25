@@ -1,0 +1,11 @@
+.button-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 50px;
+}
+
+.btn-register {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+}

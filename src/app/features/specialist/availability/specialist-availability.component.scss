@@ -1,0 +1,140 @@
+.week-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 14px;
+}
+
+@media (max-width: 1100px) {
+	.week-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 750px) {
+	.week-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.day-card {
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+}
+
+.ranges {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.range-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 48px;
+}
+
+.inputs-inline {
+	flex: 1;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+}
+
+.col label {
+	font-size: 12px;
+	margin-bottom: 2px;
+	display: block;
+}
+
+.compact-select {
+	width: 100px;
+}
+
+.compact-select .mat-mdc-form-field {
+	width: 100%;
+}
+
+.compact-select .mat-mdc-form-field-infix {
+	padding: 0 !important;
+	min-height: 28px !important;
+}
+
+.compact-select .mat-mdc-select-trigger {
+	padding: 2px 6px !important;
+	min-height: 28px !important;
+	height: 28px !important;
+	display: flex;
+	align-items: center;
+}
+
+.compact-select .mat-mdc-floating-label,
+.compact-select .mat-mdc-select-trigger {
+	font-size: 12px !important;
+}
+
+.compact-select .mat-mdc-form-field-subscript-wrapper {
+	display: none !important;
+}
+
+.trash-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 0;
+	overflow: hidden;
+	transition: width 0.25s ease;
+}
+
+.trash-wrapper.has-trash {
+	width: 32px;
+}
+
+.trash-btn {
+	width: 28px;
+	height: 28px;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
+.trash-wrapper.has-trash .trash-btn {
+	opacity: 1;
+}
+
+.add-btn {
+	width: 100%;
+	font-size: 13px;
+	padding: 0;
+}
+
+.save-row {
+	display: flex;
+	justify-content: center;
+}
+
+.mat-error-field .mat-mdc-form-field-outline {
+	color: #c62828 !important;
+	border-color: #c62828 !important;
+}
+
+.range-error {
+	color: #d32f2f;
+	font-size: 13px;
+	margin-top: 4px;
+	font-weight: bold;
+	max-width: 200px;
+	white-space: normal;
+	overflow-wrap: break-word;
+	line-height: 1.2;
+	display: inline-block;
+}

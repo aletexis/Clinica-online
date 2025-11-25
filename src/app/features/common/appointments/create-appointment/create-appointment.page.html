@@ -1,0 +1,127 @@
+<mat-card class="p-4 animate__animated animate__slideInRight">
+	<h1 class="app-text-primary fw-bold text-uppercase text-center mb-4">
+		Solicitar Turno
+	</h1>
+
+	<mat-horizontal-stepper orientation="horizontal" linear [disableRipple]="true" class="p-0">
+
+		<mat-step label="Especialista">
+			<div class="spinner-container" *ngIf="isLoadingSpecialistsImages">
+				<mat-spinner diameter="40"></mat-spinner>
+			</div>
+
+			<div class="select-list" *ngIf="!isLoadingSpecialistsImages">
+				<button class="specialist-btn" *ngFor="let s of specialists" [disabled]="!s.hasAvailability"
+					(click)="s.hasAvailability && onSelectSpecialist(s)" [class.selected]="s === selectedSpecialist"
+					[class.disabled]="!s.hasAvailability">
+
+					<img [src]="s.profileImgs" [class.grey]="!s.hasAvailability" />
+
+					<div class="overlay" *ngIf="!s.hasAvailability">
+						Sin horarios disponibles
+					</div>
+				</button>
+			</div>
+
+			<div class="d-flex justify-content-end mt-3">
+				<button mat-flat-button color="primary" matStepperNext [disabled]="!selectedSpecialist">Siguiente</button>
+			</div>
+		</mat-step>
+
+		<mat-step label="Especialidad">
+			<div class="select-list">
+				<div class="specialty-item" *ngFor="let spec of specialties">
+					<button class="specialty-btn" (click)="onSelectSpecialty(spec)" [class.selected]="spec === selectedSpecialty">
+						<div class="bg-btn">
+							<img [src]="spec.image | defaultImage:'images/specialties/default.svg'" class="img-white" />
+						</div>
+					</button>
+					<span class="specialty-name">{{ spec.name }}</span>
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-between mt-3">
+				<button mat-button matStepperPrevious>Atrás</button>
+				<button mat-flat-button color="primary" matStepperNext [disabled]="!selectedSpecialty">
+					Siguiente
+				</button>
+			</div>
+		</mat-step>
+
+		<mat-step label="Día">
+			<div class="select-list">
+				<button class="day-btn" *ngFor="let d of availableDays" (click)="onSelectDay(d)"
+					[class.selected]="d === selectedDay">
+					{{ d }}
+				</button>
+			</div>
+
+			<div class="d-flex justify-content-between mt-3">
+				<button mat-button matStepperPrevious>Atrás</button>
+				<button mat-flat-button color="primary" matStepperNext [disabled]="!selectedDay">
+					Siguiente
+				</button>
+			</div>
+		</mat-step>
+
+		<mat-step label="Horario">
+			<div class="select-list">
+				<button class="time-btn" *ngFor="let t of availableTimes" (click)="onSelectTime(t)"
+					[class.selected]="t === selectedTime" [disabled]="takenTimes.includes(t)">
+					{{ t | amPmTime }}
+				</button>
+			</div>
+
+			<div class="d-flex justify-content-between mt-3">
+				<button mat-button matStepperPrevious>Atrás</button>
+				<button mat-flat-button color="primary" matStepperNext [disabled]="!selectedTime">
+					Siguiente
+				</button>
+			</div>
+		</mat-step>
+
+		<mat-step label="Paciente" *ngIf="isAdmin">
+			<div class="select-list">
+				<div class="patient-item" *ngFor="let p of patients">
+					<button class="patient-btn" (click)="onSelectPatient(p)" [class.selected]="selectedPatient?.uid === p.uid">
+						<img [src]="p.profileImgs[0]" alt="">
+					</button>
+					<span class="patient-name">{{ p.firstName }} {{ p.lastName }}</span>
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-between mt-3">
+				<button mat-button matStepperPrevious>Atrás</button>
+				<button mat-flat-button color="primary" matStepperNext [disabled]="!selectedPatient">
+					Siguiente
+				</button>
+			</div>
+		</mat-step>
+
+		<mat-step label="Confirmación">
+			<p class="fs-5 fw-bold text-center">Revisá si está todo correcto antes de continuar</p>
+
+			<div class="d-flex justify-content-center">
+				<div class="confirm-box">
+					<p><b>Profesional:</b> <span>{{ selectedSpecialist?.firstName }} {{
+							selectedSpecialist?.lastName }}</span></p>
+					<p><b>Especialidad:</b> <span>{{ selectedSpecialty?.name }}</span></p>
+					<p><b>Día: </b> {{ selectedDay }}</p>
+					<p><b>Horario:</b> {{ selectedTime | amPmTime }}</p>
+
+					<p *ngIf="isAdmin"><b>Paciente:</b> <span>{{ selectedPatient?.firstName }} {{
+							selectedPatient?.lastName }}</span></p>
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-between mt-3">
+				<button mat-button matStepperPrevious>Atrás</button>
+				<button mat-flat-button color="primary" matStepperNext [disabled]="isAdmin && !selectedPatient"
+					(click)="confirmAppointment()">
+					Confirmar turno
+				</button>
+			</div>
+		</mat-step>
+
+	</mat-horizontal-stepper>
+</mat-card>

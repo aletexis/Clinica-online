@@ -1,0 +1,47 @@
+mat-card {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.form-row {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.file-field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.file-field input[type="file"] {
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 0.3rem;
+	font-size: 0.85rem;
+}
+
+::ng-deep .mat-stepper-vertical {
+	background-color: var(--mat-card-background, transparent) !important;
+	border-radius: 12px;
+	box-shadow: none !important;
+	padding: 1rem;
+}
+
+::ng-deep .mat-step-header.mat-active {
+	background-color: transparent !important;
+}
+
+::ng-deep .mat-step-header.cdk-program-focused,
+::ng-deep .mat-step-header:hover {
+	background-color: transparent !important;
+}
+
+::ng-deep .mat-step-header {
+	transition: none;
+}

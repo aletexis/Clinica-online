@@ -1,0 +1,35 @@
+<mat-card class="p-5 animate__animated animate__slideInDown">
+	<h1 class="app-text-primary fw-bold text-uppercase text-center mb-4">Usuarios</h1>
+
+	<div class="button-container m-2">
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('listado')">
+			<img src="images/users.png" alt="Ver usuarios" class="img-white" />
+			<h5>Ver usuarios</h5>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('dashboard/admin/usuarios')">
+			<img src="images/medical-record.png" alt="Ver historias" class="img-white" />
+			<h5>Ver historias</h5>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('aprobacion')">
+			<img src="images/add.png" alt="Habilitar especialistas" class="img-white" />
+			<h5>Habilitar especialistas</h5>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('registro-administrador')">
+			<img src="images/admin.png" alt="Registrar administradores" class="img-white" />
+			<h5>Registrar administradores</h5>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('registro-especialista')">
+			<img src="images/doctor.png" alt="Registrar especialistas" class="img-white" />
+			<h5>Registrar especialistas</h5>
+		</button>
+
+		<button matButton="filled" class="btn-register my-2 fs-5" (click)="goTo('registro-paciente')">
+			<img src="images/person.png" alt="Registrar pacientes" class="img-white" />
+			<h5>Registrar pacientes</h5>
+		</button>
+	</div>
+</mat-card>

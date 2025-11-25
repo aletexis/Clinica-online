@@ -1,0 +1,67 @@
+<mat-card class="p-5 animate__animated animate__slideInDown" *ngIf="!(loadingService.loading$ | async) && user as u">
+
+	<div *ngIf="!showAvailability && user as u">
+		<h1 class="app-text-primary fw-bold text-uppercase text-center mb-4">
+			Mi perfil
+		</h1>
+		<div class="carousel-container">
+			<button class="arrow-btn left" *ngIf="u.profileImgs && u.profileImgs.length > 1" (click)="prevImg()">‹</button>
+
+			<img class="profile-img" [src]="u.profileImgs[currentImgIndex] || 'images/default-user.png'" />
+
+			<button class="arrow-btn right" *ngIf="u.profileImgs && u.profileImgs.length > 1" (click)="nextImg()">›</button>
+		</div>
+
+		<div class="dots" *ngIf="u.profileImgs && u.profileImgs.length > 1">
+			<span *ngFor="let img of u.profileImgs; index as i" class="dot" [class.active]="i === currentImgIndex"
+				(click)="setImg(i)"></span>
+		</div>
+
+		<div class="profile-data mt-4">
+			<h5 class="card-title fw-bold fs-3 mb-2">{{ u.firstName }}, {{ u.lastName }}</h5>
+			<p>{{ u.age }} años - DNI {{ u.dni }} <br> {{ u.email }}</p>
+
+			<ng-container [ngSwitch]="u.role">
+
+				<div *ngSwitchCase="'patient'">
+					<p>
+						<strong>Obra social:</strong>
+						{{ isPatient(u) ? u.healthcareProvider : '' }}
+					</p>
+				</div>
+
+				<div *ngSwitchCase="'specialist'">
+					<p>
+						<strong>Especialidad/es:</strong>
+						{{ specialtyNames.join(', ') }}
+					</p>
+				</div>
+
+				<div *ngSwitchCase="'admin'">
+					<p class="text-muted">Administrador del sistema</p>
+				</div>
+			</ng-container>
+		</div>
+
+		<div *ngIf="u.role === 'specialist'" class="mt-5">
+			<h2 class="app-text-primary fw-bold text-uppercase text-center mb-4">Mis horarios</h2>
+
+			<button mat-flat-button color="primary" (click)="toggleAvailability()">
+				Configurar disponibilidad
+			</button>
+		</div>
+	</div>
+
+	<div *ngIf="showAvailability" class="animate__animated animate__fadeIn">
+		<h1 class="app-text-primary fw-bold text-uppercase text-center mb-4">
+			Mis Horarios
+		</h1>
+		<button matButton="tonal" class="mb-4" (click)="toggleAvailability()">
+			Volver al perfil
+		</button>
+
+		<app-specialist-availability *ngIf="isSpecialist(user)" [existingAvailability]="availability"
+			(saved)="onAvailabilitySaved()">
+		</app-specialist-availability>
+	</div>
+</mat-card>

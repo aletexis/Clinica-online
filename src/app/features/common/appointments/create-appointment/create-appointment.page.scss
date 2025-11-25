@@ -1,0 +1,250 @@
+mat-card {
+	width: 1200px;
+	max-width: 1400px;
+	margin: 0 auto;
+}
+
+::ng-deep .mat-stepper-horizontal {
+	background-color: var(--mat-card-background, transparent) !important;
+	border-radius: 12px;
+	box-shadow: none !important;
+	padding: 1rem;
+}
+
+::ng-deep .mat-step-header.mat-active {
+	background-color: transparent !important;
+}
+
+::ng-deep .mat-step-header.cdk-program-focused,
+::ng-deep .mat-step-header:hover {
+	background-color: transparent !important;
+}
+
+::ng-deep .mat-step-header {
+	transition: none;
+	pointer-events: none !important;
+}
+
+::ng-deep .mat-horizontal-stepper-content,
+::ng-deep .mat-horizontal-content-container {
+	padding: 0 24px 0 24px !important;
+}
+
+.spinner-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+
+.select-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	gap: 12px;
+
+	min-height: 280px;
+	height: 100%;
+}
+
+.select-btn {
+	border: 2px solid transparent;
+	border-radius: 8px;
+	padding: 8px;
+	background: #DCE0E7;
+	cursor: pointer;
+	transition: 0.2s ease;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.9rem;
+	overflow: hidden;
+}
+
+.select-btn img {
+	object-fit: cover;
+	display: block;
+}
+
+.select-btn span {
+	text-align: center;
+	font-size: 0.9rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+}
+
+.select-btn.selected {
+	border-color: #EE7734;
+	background-color: #FCE8DC;
+}
+
+.specialist-btn {
+	@extend .select-btn;
+	width: 160px;
+	height: 160px;
+	position: relative;
+	cursor: pointer;
+
+	img {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		margin-bottom: 6px;
+	}
+
+	&.disabled {
+		cursor: not-allowed;
+	}
+
+	img.grey {
+		filter: grayscale(100%);
+		opacity: 0.6;
+	}
+
+	.overlay {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		background-color: #415464;
+		background-color: #44474E;
+		color: #fff;
+		font-size: 12px;
+		padding: 3px 0;
+		text-align: center;
+	}
+}
+
+.specialty-btn {
+	@extend .select-btn;
+	width: 160px;
+	height: 190px;
+	border-radius: 0;
+
+	img {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		object-fit: cover;
+		padding: 8px;
+	}
+}
+
+.specialty-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 160px;
+}
+
+.specialty-name {
+	margin-top: 6px;
+	text-align: center;
+	font-size: 1rem;
+	max-width: 140px;
+
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+}
+
+.bg-btn {
+	background-color: #EE7734;
+	border-radius: 50%;
+}
+
+.day-btn {
+	@extend .select-btn;
+	width: 100px;
+	height: 100px;
+	font-weight: 500;
+	border-radius: 0;
+}
+
+.time-btn {
+	@extend .select-btn;
+	width: 120px;
+	padding: 12px 0;
+	border-radius: 12px;
+	font-weight: 500;
+}
+
+.time-btn[disabled] {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.patient-btn {
+	@extend .select-btn;
+	width: 160px;
+	height: 160px;
+
+	img {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+}
+
+.patient-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 160px;
+}
+
+.patient-name {
+	margin-top: 6px;
+	text-align: center;
+	font-size: 1rem;
+	max-width: 140px;
+
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+}
+
+.confirm-box {
+	margin: 0 auto;
+	display: inline-block;
+	max-width: 600px;
+	padding: 15px 20px;
+	background: #DCE0E7;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.confirm-box p {
+	margin: 8px 0;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+.confirm-box p b {
+	margin-right: 6px;
+	flex-shrink: 0;
+}
+
+.confirm-box p span {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex: 1;
+}

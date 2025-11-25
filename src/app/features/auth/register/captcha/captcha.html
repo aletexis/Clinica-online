@@ -1,0 +1,31 @@
+<div class="captcha-container">
+	<div class="captcha-background">
+		<canvas #captchaCanvas width="300" height="60"></canvas>
+	</div>
+
+	<div class="captcha-actions">
+		<mat-form-field appearance="outline" class="captcha-form-field">
+			<input matInput placeholder="Ingrese el Captcha" class="captcha-input" type="text" [(ngModel)]="userInput"
+				required>
+		</mat-form-field>
+
+		<button mat-flat-button color="primary" (click)="validateCaptcha()" [disabled]="!userInput">
+			Validar
+		</button>
+
+		<button class="captcha-refresh" (click)="generateCaptcha()" mat-icon-button>
+			<i class="fa-solid fa-rotate-right"></i>
+		</button>
+	</div>
+
+	<div class="captcha-status">
+		<span *ngIf="captchaInvalid"
+			class="badge rounded-pill app-text-error pill-bg-error fw-bold fs-6 p-2 animate__animated animate__headShake">
+			Captcha inválido
+		</span>
+		<span *ngIf="captchaValid"
+			class="badge rounded-pill app-text-success pill-bg-success fw-bold fs-6 p-2 animate__animated animate__slideInUp">
+			Captcha válido
+		</span>
+	</div>
+</div>
