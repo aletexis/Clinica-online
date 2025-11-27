@@ -10,13 +10,5 @@ import { LoadingService } from '../../../core/services/loading.service';
 })
 export class LoaderComponent {
 
-  isLoading = false;
-
-  constructor(private loadingService: LoadingService) { }
-
-  ngOnInit() {
-    this.loadingService.loading$.subscribe((state) => {
-      this.isLoading = state;
-    });
-  }
+  constructor(public loadingService: LoadingService) { }
 }
