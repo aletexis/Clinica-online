@@ -1,14 +1,16 @@
+import { ClinicalRecord } from "./clinicalRecord";
+
 export interface Appointment {
 	uid?: string;
 	id?: string;
 
 	patientUid: string;
 	specialistUid: string;
-	specialty: string;   // nombre de especialidad para no tener que joinear
+	specialty: string;
 	createdAt: Date;
 
-	date: string;        // formato YYYY-MM-DD
-	time: string;        // formato HH:mm
+	date: string;
+	time: string;
 
 	status: AppointmentStatus;
 
@@ -16,17 +18,21 @@ export interface Appointment {
 	patientCancellationComment?: string;       // paciente cancela
 	specialistCancellationComment?: string;    // especialista cancela
 	specialistRejectionComment?: string;       // especialista rechaza
-	specialistReview?: string;                 // especialista finaliza turno (reseña)
+	specialistReview?: {                       // especialista finaliza turno (reseña)
+		comment: string;
+		diagnosis: string;
+	};
 	patientSurvey?: string;                    // encuesta del paciente
-	patientRating?: number;                    // 1 a 5
 	patientRatingComment?: string;             // comentario sobre la atención
 
 	adminCreatedForPatientUid?: string;        // si el admin cargó turno para otro paciente
+
+	clinicalRecord?: ClinicalRecord;
 }
 
 export type AppointmentStatus =
-	| 'pending'       // Solicitado (pero todavía no aceptado)
+	| 'pending'       // Solicitado por paciente/admin
 	| 'accepted'      // Aceptado por el especialista
 	| 'rejected'      // Rechazado por el especialista
 	| 'cancelled'     // Cancelado por paciente/especialista/admin
-	| 'completed';    // Finalizado (especialista lo marca como realizado)
+	| 'completed';    // Finalizado por el especialista
