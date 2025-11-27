@@ -3,5 +3,10 @@ export interface ClinicalRecord {
 	weight: number;
 	temperature: number;
 	bloodPressure: string;
-	dynamicFields?: { key: string, value: string }[];
+	dynamicFields?: DynamicField[];
+}
+
+interface DynamicField {
+	key: string;
+	value: string;
 }

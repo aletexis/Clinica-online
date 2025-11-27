@@ -39,38 +39,43 @@
 				</td>
 				<td>
 					<ng-container *ngFor="let action of getActions(app)">
-						<button mat-flat-button class="btn-purple my-2" *ngIf="action === 'ver-detalle'"
+						<button mat-flat-button class="btn-purple m-2" *ngIf="action === 'ver-detalle'"
 							(click)="openDetailDialog(app)">
 							Ver detalle
 						</button>
 
-						<button mat-flat-button class="btn-red my-2" *ngIf="action === 'cancelar'" (click)="openCancelDialog(app)">
+						<button mat-flat-button class="btn-red m-2" *ngIf="action === 'cancelar'" (click)="openCancelDialog(app)">
 							Cancelar
 
 						</button>
-						<button mat-flat-button class="btn-gray my-2" *ngIf="action === 'rechazar'" (click)="openRejectDialog(app)">
+						<button mat-flat-button class="btn-gray m-2" *ngIf="action === 'rechazar'" (click)="openRejectDialog(app)">
 							Rechazar
 						</button>
 
-						<button mat-flat-button class="btn-blue my-2" *ngIf="action === 'aceptar'" (click)="openAcceptDialog(app)">
+						<button mat-flat-button class="btn-blue m-2" *ngIf="action === 'aceptar'" (click)="openAcceptDialog(app)">
 							Aceptar
 						</button>
 
-						<button mat-flat-button class="btn-green my-2" *ngIf="action === 'finalizar'"
+						<button mat-flat-button class="btn-green m-2" *ngIf="action === 'finalizar'"
 							(click)="openCompleteDialog(app)">
 							Finalizar
 						</button>
 
-						<button mat-flat-button class="btn-cyan my-2" *ngIf="action === 'ver-resena'"
+						<button mat-flat-button class="btn-orange m-2" *ngIf="action === 'cargar-historia' && !app.clinicalRecord"
+							(click)="openClinicalRecordDialog(app)">
+							Cargar historia clínica
+						</button>
+
+						<button mat-flat-button class="btn-cyan m-2" *ngIf="action === 'ver-resena'"
 							(click)="openReviewDialog(app)">
 							Ver reseña
 						</button>
 
-						<button mat-flat-button class="btn-lime my-2" *ngIf="action === 'encuesta'" (click)="openSurveyDialog(app)">
+						<button mat-flat-button class="btn-lime m-2" *ngIf="action === 'encuesta'" (click)="openSurveyDialog(app)">
 							Completar encuesta
 						</button>
 
-						<button mat-flat-button class="btn-yellow my-2" *ngIf="action === 'calificar'"
+						<button mat-flat-button class="btn-yellow m-2" *ngIf="action === 'calificar'"
 							(click)="openRatingDialog(app)">
 							Calificar
 						</button>
@@ -242,6 +247,145 @@
 		</button>
 	</mat-dialog-actions>
 </ng-template>
+
+<!-- Dialog Historia clinica -->
+<ng-template #clinicalRecordDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Historia Clínica
+	</h4>
+
+	<mat-dialog-content [formGroup]="clinicalForm" style="max-height: 70vh; overflow:auto">
+
+		<p class="text-center">
+			Estás cargando la historia clínica de
+			<b>{{ getPatientName(selectedAppointment.patientUid) }}</b>.
+		</p>
+
+		<div class="row mt-5">
+			<div class="col-6">
+				<mat-form-field appearance="outline" class="w-100 mb-4">
+					<mat-label>Altura (cm)</mat-label>
+					<input matInput type="number" formControlName="height">
+					<mat-error *ngIf="clinicalForm.get('height')?.hasError('required')" class="mb-1">
+						Este campo es obligatorio
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('height')?.hasError('min')" class="mb-1">
+						La altura mínima es {{ clinicalForm.get('height')?.errors?.['min']?.min }} cm
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('height')?.hasError('max')" class="mb-1">
+						La altura máxima es {{ clinicalForm.get('height')?.errors?.['max']?.max }} cm
+					</mat-error>
+				</mat-form-field>
+			</div>
+
+			<div class="col-6">
+				<mat-form-field appearance="outline" class="w-100 mb-4">
+					<mat-label>Peso (kg)</mat-label>
+					<input matInput type="number" formControlName="weight">
+					<mat-error *ngIf="clinicalForm.get('weight')?.hasError('required')" class="mb-1">
+						Este campo es obligatorio
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('weight')?.hasError('min')" class="mb-1">
+						El peso mínimo es {{ clinicalForm.get('weight')?.errors?.['min']?.min }} kg
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('weight')?.hasError('max')" class="mb-1">
+						El peso máximo es {{ clinicalForm.get('weight')?.errors?.['max']?.max }} kg
+					</mat-error>
+				</mat-form-field>
+			</div>
+
+			<div class="col-6">
+				<mat-form-field appearance="outline" class="w-100 mb-4">
+					<mat-label>Temperatura (°C)</mat-label>
+					<input matInput type="number" formControlName="temperature">
+					<mat-error *ngIf="clinicalForm.get('temperature')?.hasError('required')" class="mb-1">
+						Este campo es obligatorio
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('temperature')?.hasError('min')" class="mb-1">
+						La temperatura mínima es {{ clinicalForm.get('temperature')?.errors?.['min']?.min }} °C
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('temperature')?.hasError('max')" class="mb-1">
+						La temperatura máxima es {{ clinicalForm.get('temperature')?.errors?.['max']?.max }} °C
+					</mat-error>
+				</mat-form-field>
+			</div>
+
+			<div class="col-6">
+				<mat-form-field appearance="outline" class="w-100 mb-4">
+					<mat-label>Presión</mat-label>
+					<input matInput formControlName="bloodPressure">
+					<mat-error *ngIf="clinicalForm.get('bloodPressure')?.hasError('required')" class="mb-1">
+						Este campo es obligatorio
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('bloodPressure')?.hasError('maxlength')" class="mb-1">
+						Máximo 10 caracteres
+					</mat-error>
+					<mat-error *ngIf="clinicalForm.get('bloodPressure')?.hasError('pattern')" class="mb-1">
+						Solo se admite formato 120/80 (número / número)
+					</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<h6 class="my-4 fw-bold">Datos adicionales (máximo 3)</h6>
+
+		<mat-chip-set class="mb-4">
+			<mat-chip *ngFor="let item of dynamicArray.controls; let i = index" [removable]="true"
+				(removed)="removeDynamic(i)">
+				<strong>{{ item.value.key }}:</strong> {{ item.value.value }}
+				<button matChipRemove>
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</mat-chip>
+		</mat-chip-set>
+
+
+		<div class="d-flex align-items-center gap-2">
+
+			<mat-form-field appearance="outline" class="flex-grow-1">
+				<mat-label>Dato</mat-label>
+				<input matInput [formControl]="dynamicKey">
+
+				<mat-error *ngIf="dynamicKey.hasError('required')">
+					Ingresá un dato
+				</mat-error>
+
+				<mat-error *ngIf="dynamicKey.hasError('maxlength')">
+					Máximo 20 caracteres
+				</mat-error>
+
+				<mat-error *ngIf="dynamicKey.hasError('duplicate')">
+					Ya agregaste esta clave
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" class="flex-grow-1">
+				<mat-label>Valor</mat-label>
+				<input matInput [formControl]="dynamicValue">
+
+				<mat-error *ngIf="dynamicValue.hasError('required')">
+					Ingresá un valor
+				</mat-error>
+
+				<mat-error *ngIf="dynamicValue.hasError('maxlength')">
+					Máximo 20 caracteres
+				</mat-error>
+			</mat-form-field>
+
+			<button mat-flat-button color="primary" (click)="addDynamic()">
+				<i class="fa-solid fa-plus"></i>
+			</button>
+		</div>
+	</mat-dialog-content>
+
+	<mat-dialog-actions class="mt-3">
+		<button mat-button mat-dialog-close>Cancelar</button>
+		<button mat-flat-button color="primary" (click)="submitClinicalRecord()" [disabled]="clinicalForm.invalid">
+			Guardar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+
 
 <!-- Especialista y Paciente -->
 

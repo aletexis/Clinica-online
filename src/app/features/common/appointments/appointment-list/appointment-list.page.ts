@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { combineLatest, take } from 'rxjs';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../../../core/services/alert.service';
 import { FirestoreService } from '../../../../core/services/firestore.service';
 import { LoadingService } from '../../../../core/services/loading.service';
@@ -17,6 +17,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../../core/services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { ClinicalRecord } from '../../../../core/models/clinicalRecord';
 
 @Component({
   selector: 'app-appointment-list.page',
@@ -33,7 +35,8 @@ import { MatIconModule } from '@angular/material/icon';
     AppointmentStatusPipe,
     FormatDatePipe,
     StatusBadgeDirective,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule
   ],
   templateUrl: './appointment-list.page.html',
   styleUrl: './appointment-list.page.scss'
@@ -68,6 +71,12 @@ export class AppointmentListPage {
   completeComment: string = '';
   completeDiagnosis: string = '';
 
+  @ViewChild('clinicalRecordDialog') clinicalRecordDialog!: TemplateRef<any>;
+  clinicalForm!: FormGroup;
+  dynamicKey!: FormControl;
+  dynamicValue!: FormControl;
+  maxDynamic = 3;
+
   @ViewChild('reviewDialog') reviewDialog!: TemplateRef<any>;
 
   @ViewChild('surveyDialog') surveyDialog!: TemplateRef<any>;
@@ -81,7 +90,8 @@ export class AppointmentListPage {
     private firestoreService: FirestoreService,
     private loadingService: LoadingService,
     private alertService: AlertService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -92,6 +102,31 @@ export class AppointmentListPage {
         this.role = user.role;
         this.loadAppointmentsForRole();
       });
+
+    this.clinicalForm = this.fb.group({
+      height: ['', [Validators.required, Validators.min(30), Validators.max(250)]],
+      weight: ['', [Validators.required, Validators.min(1), Validators.max(350)]],
+      temperature: ['', [Validators.required, Validators.min(30), Validators.max(45)]],
+      bloodPressure: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.pattern(/^\d{2,3}\/\d{2,3}$/)
+        ]
+      ],
+      dynamic: this.fb.array([])
+    });
+
+    this.dynamicKey = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(20)
+    ]);
+
+    this.dynamicValue = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(20)
+    ]);
   }
 
   // Carga de turnos
@@ -297,6 +332,10 @@ export class AppointmentListPage {
       actions.push('cancelar');
     }
 
+    if (app.status === 'completed' && !app.clinicalRecord) {
+      actions.push('cargar-historia');
+    }
+
     if (app.patientRatingComment) {
       actions.push('ver-resena');
     }
@@ -482,16 +521,122 @@ export class AppointmentListPage {
         this.alertService.success('Turno finalizado con éxito');
         this.dialog.closeAll();
         this.loadAppointmentsForRole();
+        this.openClinicalRecordDialog(this.selectedAppointment);
       })
       .catch(() => {
         this.alertService.error('Hubo un problema al finalizar el turno');
       });
   }
 
+  openClinicalRecordDialog(app: Appointment) {
+    this.selectedAppointment = app;
+
+    const dialogRef = this.dialog.open(this.clinicalRecordDialog, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.clinicalForm.reset();
+      this.dynamicArray.clear();
+      this.dynamicKey.reset();
+      this.dynamicValue.reset();
+    });
+  }
+
+  submitClinicalRecord() {
+    if (!this.selectedAppointment) return;
+
+    if (this.clinicalForm.invalid) {
+      this.clinicalForm.markAllAsTouched();
+      this.alertService.error('Revisá los campos obligatorios');
+      return;
+    }
+
+    const dynamicFields = this.dynamicArray.value.map((item: any) => ({
+      key: item.key.trim(),
+      value: item.value.trim()
+    }));
+
+    const clinicalRecord: ClinicalRecord = {
+      height: this.clinicalForm.value.height,
+      weight: this.clinicalForm.value.weight,
+      temperature: this.clinicalForm.value.temperature,
+      bloodPressure: this.clinicalForm.value.bloodPressure,
+      dynamicFields: dynamicFields.length > 0 ? dynamicFields : undefined
+    };
+
+    const updated: Partial<Appointment> = {
+      clinicalRecord
+    };
+
+    this.firestoreService
+      .update('appointments', this.selectedAppointment.id!, updated)
+      .then(() => {
+        this.alertService.success('Historia clínica guardada con éxito');
+        this.dialog.closeAll();
+        this.loadAppointmentsForRole();
+      })
+      .catch(() => {
+        this.alertService.error('Hubo un problema al guardar la historia clínica');
+      });
+  }
+
+  get dynamicArray(): FormArray {
+    return this.clinicalForm.get('dynamic') as FormArray;
+  }
+
+  addDynamic() {
+    if (!this.dynamicKey.value && !this.dynamicValue.value) return;
+
+    if (this.dynamicKey.value && !this.dynamicValue.value) {
+      this.dynamicValue.setErrors({ required: true });
+      this.dynamicValue.markAsTouched();
+      return;
+    }
+
+    if (this.dynamicValue.value && !this.dynamicKey.value) {
+      this.dynamicKey.setErrors({ required: true });
+      this.dynamicKey.markAsTouched();
+      return;
+    }
+
+    if (this.dynamicKey.invalid || this.dynamicValue.invalid) {
+      this.dynamicKey.markAsTouched();
+      this.dynamicValue.markAsTouched();
+      return;
+    }
+
+    const exists = this.dynamicArray.value.some(
+      (item: any) =>
+        item.key?.trim().toLowerCase() === this.dynamicKey.value.trim().toLowerCase()
+    );
+
+    if (exists) {
+      this.dynamicKey.setErrors({ duplicate: true });
+      this.dynamicKey.markAsTouched();
+      return;
+    }
+
+    this.dynamicArray.push(
+      this.fb.group({
+        key: this.dynamicKey.value.trim(),
+        value: this.dynamicValue.value.trim()
+      })
+    );
+
+    this.dynamicKey.reset();
+    this.dynamicValue.reset();
+    this.dynamicKey.setErrors(null);
+    this.dynamicValue.setErrors(null);
+  }
+
+  removeDynamic(i: number) {
+    this.dynamicArray.removeAt(i);
+  }
+
   // Especialista y Paciente
 
   openReviewDialog(app: Appointment) {
-    console.log(app)
     this.selectedAppointment = app;
     this.dialog.open(this.reviewDialog, { width: '500px' });
   }
