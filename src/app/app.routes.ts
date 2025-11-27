@@ -100,7 +100,7 @@ export const routes: Routes = [
 					{
 						path: 'listado',
 						loadComponent: () =>
-							import('./features/admin/appointments/appointment-list/appointment-list.page').then(m => m.AppointmentListPage),
+							import('./features/common/appointments/appointment-list/appointment-list.page').then(m => m.AppointmentListPage),
 					},
 					{
 						path: 'crear',
@@ -130,9 +130,9 @@ export const routes: Routes = [
 					import('./features/common/my-profile/my-profile.page').then(m => m.MyProfilePage),
 			},
 			{
-				path: 'turnos',
+				path: 'turnos/listado',
 				loadComponent: () =>
-					import('./features/common/appointments/my-appointments/my-appointments.page').then(m => m.MyAppointmentsPage),
+					import('./features/common/appointments/appointment-list/appointment-list.page').then(m => m.AppointmentListPage),
 			},
 		],
 	},
@@ -160,9 +160,9 @@ export const routes: Routes = [
 					import('./features/common/appointments/create-appointment/create-appointment.page').then(m => m.CreateAppointmentPage),
 			},
 			{
-				path: 'turnos',
+				path: 'turnos/listado',
 				loadComponent: () =>
-					import('./features/common/appointments/my-appointments/my-appointments.page').then(m => m.MyAppointmentsPage),
+					import('./features/common/appointments/appointment-list/appointment-list.page').then(m => m.AppointmentListPage),
 			},
 		],
 	},
