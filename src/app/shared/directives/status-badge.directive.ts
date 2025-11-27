@@ -12,7 +12,7 @@ export class StatusBadgeDirective {
   ngOnChanges() {
     const native = this.el.nativeElement;
     native.classList.add('badge-pill');
-    native.classList.remove('badge-pending', 'badge-accepted', 'badge-cancelled', 'badge-rejected', 'badge-finished');
+    native.classList.remove('badge-pending', 'badge-accepted', 'badge-cancelled', 'badge-rejected', 'badge-completed');
 
     switch (this.status) {
       case 'pending':
@@ -27,8 +27,8 @@ export class StatusBadgeDirective {
       case 'rejected':
         native.classList.add('badge-rejected');
         break;
-      case 'finished':
-        native.classList.add('badge-finished');
+      case 'completed':
+        native.classList.add('badge-completed');
         break;
     }
   }
