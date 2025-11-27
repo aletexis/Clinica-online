@@ -1,0 +1,333 @@
+<mat-card class="p-4 animate__animated animate__fadeIn">
+	<h1 class="app-text-primary fw-bold text-center text-uppercase mb-4">
+		Listado de Turnos
+	</h1>
+
+	<mat-form-field appearance="outline" class="w-100 mt-3">
+		<mat-label>{{ searchPlaceholder }}</mat-label>
+		<input matInput type="text" (input)="onSearch($event)">
+	</mat-form-field>
+
+
+	<table class="table table-striped text-center align-middle">
+		<thead>
+			<tr>
+				<th *ngIf="role !== 'patient'">Paciente</th>
+				<th *ngIf="role !== 'specialist'">Especialista</th>
+				<th>Especialidad</th>
+				<th>Día</th>
+				<th>Horario</th>
+				<th>Estado</th>
+				<th>Acciones sobre los turnos</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let app of filteredAppointments">
+				<td *ngIf="role !== 'patient'">
+					{{ getPatientName(app.patientUid) }}
+				</td>
+				<td *ngIf="role !== 'specialist'">
+					{{ getSpecialistName(app.specialistUid) }}
+				</td>
+				<td>{{ app.specialty }}</td>
+				<td>{{ app.date }}</td>
+				<td>{{ app.time }}</td>
+				<td>
+					<span [statusBadge]="app.status">
+						{{ app.status | appointmentStatus }}
+					</span>
+				</td>
+				<td>
+					<ng-container *ngFor="let action of getActions(app)">
+						<button mat-flat-button class="btn-purple my-2" *ngIf="action === 'ver-detalle'"
+							(click)="openDetailDialog(app)">
+							Ver detalle
+						</button>
+
+						<button mat-flat-button class="btn-red my-2" *ngIf="action === 'cancelar'" (click)="openCancelDialog(app)">
+							Cancelar
+
+						</button>
+						<button mat-flat-button class="btn-gray my-2" *ngIf="action === 'rechazar'" (click)="openRejectDialog(app)">
+							Rechazar
+						</button>
+
+						<button mat-flat-button class="btn-blue my-2" *ngIf="action === 'aceptar'" (click)="openAcceptDialog(app)">
+							Aceptar
+						</button>
+
+						<button mat-flat-button class="btn-green my-2" *ngIf="action === 'finalizar'"
+							(click)="openCompleteDialog(app)">
+							Finalizar
+						</button>
+
+						<button mat-flat-button class="btn-cyan my-2" *ngIf="action === 'ver-resena'"
+							(click)="openReviewDialog(app)">
+							Ver reseña
+						</button>
+
+						<button mat-flat-button class="btn-lime my-2" *ngIf="action === 'encuesta'" (click)="openSurveyDialog(app)">
+							Completar encuesta
+						</button>
+
+						<button mat-flat-button class="btn-yellow my-2" *ngIf="action === 'calificar'"
+							(click)="openRatingDialog(app)">
+							Calificar
+						</button>
+					</ng-container>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</mat-card>
+
+
+<!-- Todos -->
+
+<!-- Dialog Ver detalle -->
+<ng-template #detailDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Detalle del Turno
+	</h4>
+
+	<mat-dialog-content class="p-3 fs-6">
+		<p *ngIf="role !== 'patient'"><b>Paciente:</b> {{ getPatientName(selectedAppointment.patientUid) }}</p>
+		<p *ngIf="role !== 'specialist'"><b>Especialista:</b> {{ getSpecialistName(selectedAppointment.specialistUid) }}</p>
+		<p><b>Especialidad:</b> {{ selectedAppointment.specialty }}</p>
+		<p><b>Día:</b> {{ selectedAppointment.date }}</p>
+		<p><b>Horario:</b> {{ selectedAppointment.time }}</p>
+		<p><b>Estado:</b> {{ selectedAppointment.status | appointmentStatus }}</p>
+		<p *ngIf="selectedAppointment.adminCancellationComment"><b>Comentario de cancelación administrador:</b> {{
+			selectedAppointment.adminCancellationComment }}</p>
+		<p *ngIf="selectedAppointment.patientCancellationComment"><b>Comentario de cancelación paciente:</b> {{
+			selectedAppointment.patientCancellationComment }}</p>
+		<p *ngIf="selectedAppointment.specialistCancellationComment"><b>Comentario de cancelación especialista:</b> {{
+			selectedAppointment.specialistCancellationComment }}</p>
+		<p *ngIf="selectedAppointment.specialistRejectionComment"><b>Comentario rechazo:</b> {{
+			selectedAppointment.specialistRejectionComment }}</p>
+		<p *ngIf="role === 'admin'"><b>Comentario del especialista:</b> {{ selectedAppointment.specialistReview?.comment }}
+		</p>
+		<p *ngIf="role === 'admin'"><b>Diagnóstico:</b> {{ selectedAppointment.specialistReview?.diagnosis }}
+		</p>
+		<p *ngIf="role === 'admin'"><b>Comentario del paciente:</b> {{ selectedAppointment.patientRatingComment }}
+		</p>
+		<p *ngIf="selectedAppointment.adminCreatedForPatientUid"><b>Creado por administrador para:</b> {{
+			getPatientName(selectedAppointment.adminCreatedForPatientUid) }}</p>
+		<p><b>Creado en:</b> {{ selectedAppointment.createdAt | formatDate }} </p>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button matButton="tonal" mat-dialog-close>Cerrar</button>
+	</mat-dialog-actions>
+</ng-template>
+
+<!-- Dialog Cancelar -->
+<ng-template #cancelDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Cancelar Turno
+	</h4>
+
+	<mat-dialog-content>
+		<p class="text-center" *ngIf="role !== 'patient'">Estás por cancelar el turno de
+			<b>{{ getPatientName(selectedAppointment.patientUid) }}</b>.
+		</p>
+		<mat-form-field appearance="outline" class="w-100 mt-3">
+			<mat-label>Motivo de cancelación</mat-label>
+			<textarea matInput [(ngModel)]="cancelComment" [attr.maxlength]="maxCommentLength" rows="5" required>
+	    </textarea>
+			<mat-hint align="end" class="fw-bold" [ngStyle]="{ color: isCommentTooLong ? '#c62828' : 'rgba(0,0,0,0.6)' }">
+				{{ cancelComment.length }}/{{ maxCommentLength }}
+			</mat-hint>
+		</mat-form-field>
+	</mat-dialog-content>
+
+	<mat-dialog-actions class="mt-3">
+		<button matButton="tonal" mat-dialog-close>Cancelar</button>
+		<button mat-flat-button color="primary" (click)="cancelAppointment()"
+			[disabled]="!cancelComment.trim() || isCommentTooLong">
+			Confirmar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+
+<!-- Especialista -->
+
+<!-- Dialog Rechazar -->
+<ng-template #rejectDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Rechazar Turno
+	</h4>
+
+	<mat-dialog-content>
+		<p class="text-center" *ngIf="role !== 'patient'">Estás por rechazar el turno de
+			<b>{{ getPatientName(selectedAppointment.patientUid) }}</b>.
+		</p>
+		<mat-form-field appearance="outline" class="w-100 mt-3">
+			<mat-label>Motivo de rechazo</mat-label>
+			<textarea matInput [(ngModel)]="rejectComment" [attr.maxlength]="maxCommentLength" rows="5" required>
+	    </textarea>
+			<mat-hint align="end" class="fw-bold" [ngStyle]="{ color: isCommentTooLong ? '#c62828' : 'rgba(0,0,0,0.6)' }">
+				{{ rejectComment.length }}/{{ maxCommentLength }}
+			</mat-hint>
+		</mat-form-field>
+	</mat-dialog-content>
+
+	<mat-dialog-actions class="mt-3">
+		<button matButton="tonal" mat-dialog-close>Cancelar</button>
+		<button mat-flat-button color="primary" (click)="rejectAppointment()"
+			[disabled]="!rejectComment.trim() || isCommentTooLong">
+			Confirmar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+
+<!-- Dialog Aceptar -->
+<ng-template #acceptDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Aceptar turno
+	</h4>
+
+	<mat-dialog-content>
+		<p class="text-center">¿Estás seguro/a que querés aceptar el turno de
+			<b>{{ getPatientName(selectedAppointment.patientUid) }}</b>?
+		</p>
+	</mat-dialog-content>
+
+	<mat-dialog-actions align="end" class="mt-3">
+		<button matButton="tonal" mat-dialog-close>Cancelar</button>
+		<button mat-flat-button color="primary" (click)="acceptAppointment()">
+			Confirmar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+
+<!-- Dialog Finalizar -->
+<ng-template #completeDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Finalizar turno
+	</h4>
+
+	<mat-dialog-content>
+		<p class="text-center" *ngIf="role !== 'patient'">
+			Estás por finalizar el turno de
+			<b>{{ getPatientName(selectedAppointment.patientUid) }}</b>.
+		</p>
+
+		<mat-form-field appearance="outline" class="w-100 mt-3">
+			<mat-label>Comentario de la consulta</mat-label>
+			<textarea matInput [(ngModel)]="completeComment" [attr.maxlength]="maxCommentLength" rows="4" required>
+	      </textarea>
+			<mat-hint align="end" class="fw-bold" [ngStyle]="{ color: isCommentTooLong ? '#c62828' : 'rgba(0,0,0,0.6)' }">
+				{{ completeComment.length }}/{{ maxCommentLength }}
+			</mat-hint>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" class="w-100 mt-3">
+			<mat-label>Diagnóstico</mat-label>
+			<textarea matInput [(ngModel)]="completeDiagnosis" [attr.maxlength]="maxCommentLength" rows="4" required>
+	      </textarea>
+			<mat-hint align="end" class="fw-bold" [ngStyle]="{ color: isCommentTooLong ? '#c62828' : 'rgba(0,0,0,0.6)' }">
+				{{ completeDiagnosis.length }}/{{ maxCommentLength }}
+			</mat-hint>
+		</mat-form-field>
+	</mat-dialog-content>
+
+	<mat-dialog-actions class="mt-3">
+		<button matButton="tonal" mat-dialog-close>Cancelar</button>
+		<button mat-flat-button color="primary" (click)="completeAppointment()" [disabled]="
+	        !completeComment.trim() ||
+	        !completeDiagnosis.trim() ||
+	        isCommentTooLong
+	      ">
+			Confirmar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+
+<!-- Especialista y Paciente -->
+
+<!-- Dialog Ver reseña -->
+<ng-template #reviewDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Reseña del turno
+	</h4>
+
+	<mat-dialog-content class="p-3 fs-6">
+
+		<ng-container *ngIf="role === 'patient'">
+			<p *ngIf="selectedAppointment.specialistReview?.comment">
+				<b>Comentario del especialista:</b>
+				{{ selectedAppointment.specialistReview?.comment }}
+			</p>
+
+			<p *ngIf="selectedAppointment.specialistReview?.diagnosis">
+				<b>Diagnóstico:</b>
+				{{ selectedAppointment.specialistReview?.diagnosis }}
+			</p>
+		</ng-container>
+
+		<ng-container *ngIf="role === 'specialist'">
+			<p *ngIf="selectedAppointment.patientRatingComment">
+				<b>Comentario del paciente:</b>
+				{{ selectedAppointment.patientRatingComment }}
+			</p>
+		</ng-container>
+	</mat-dialog-content>
+
+	<mat-dialog-actions>
+		<button matButton="tonal" mat-dialog-close>Cerrar</button>
+	</mat-dialog-actions>
+</ng-template>
+
+
+<!-- Paciente -->
+
+<!-- Dialog Encuesta -->
+<!-- surveyDialog -->
+<ng-template #surveyDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Completar Encuesta
+	</h4>
+
+	<mat-dialog-content>
+		<p class="text-center">aaa </p>
+	</mat-dialog-content>
+
+	<mat-dialog-actions align="end" class="mt-3">
+		<button matButton="tonal" mat-dialog-close>Cancelar</button>
+		<button mat-flat-button color="primary" (click)="submitSurvey()">
+			Confirmar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+
+<!-- Dialog Calificar -->
+<ng-template #ratingDialog>
+	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
+		Comentario sobre la atención
+	</h4>
+
+	<mat-dialog-content>
+		<p class="text-center">
+			Contanos cómo fue tu atención con
+			<b>{{ getSpecialistName(selectedAppointment.specialistUid) }}</b>.
+		</p>
+
+		<mat-form-field appearance="outline" class="w-100 mt-3">
+			<mat-label>Comentario del paciente</mat-label>
+			<textarea matInput [(ngModel)]="patientRatingComment" [attr.maxlength]="maxCommentLength" rows="4" required>
+      </textarea>
+			<mat-hint align="end" class="fw-bold" [ngStyle]="{ color: isCommentTooLong ? '#c62828' : 'rgba(0,0,0,0.6)' }">
+				{{ patientRatingComment.length }}/{{ maxCommentLength }}
+			</mat-hint>
+		</mat-form-field>
+
+	</mat-dialog-content>
+
+	<mat-dialog-actions class="mt-3">
+		<button matButton="tonal" mat-dialog-close>Cancelar</button>
+		<button mat-flat-button color="primary" (click)="submitPatientReview()"
+			[disabled]="!patientRatingComment.trim() || isCommentTooLong">
+			Enviar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
