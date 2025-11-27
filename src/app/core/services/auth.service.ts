@@ -18,37 +18,17 @@ export class AuthService {
 	private userInitializedSubject = new BehaviorSubject<boolean>(false);
 	userInitialized$ = this.userInitializedSubject.asObservable();
 
-	// constructor() {
-	// 	onAuthStateChanged(this.auth, async (user) => {
-	// 		if (user) {
-	// 			const userData = await this.getUserData(user.uid);
-	// 			this.userSubject.next(userData);
-	// 		} else {
-	// 			this.userSubject.next(null);
-	// 		}
-	// 		this.userInitializedSubject.next(true);
-	// 	});
-	// }
 	constructor() {
-		console.log("AuthService constructor");
-
 		onAuthStateChanged(this.auth, async (user) => {
-			console.log("onAuthStateChanged fired", user);
-
 			if (user) {
 				const userData = await this.getUserData(user.uid);
-				console.log("User loaded", userData);
 				this.userSubject.next(userData);
 			} else {
-				console.log("No user");
 				this.userSubject.next(null);
 			}
-
-			console.log("Setting initialized=true");
 			this.userInitializedSubject.next(true);
 		});
 	}
-
 
 	async register(
 		email: string,
