@@ -256,19 +256,39 @@ export class AppointmentListPage {
       const specialistName = this.getSpecialistName(app.specialistUid)?.toLowerCase() || '';
       const patientName = this.getPatientName(app.patientUid)?.toLowerCase() || '';
 
+      const record = app.clinicalRecord;
+      let recordText = '';
+
+      if (record) {
+        recordText += `${record.height} ${record.weight} ${record.temperature} ${record.bloodPressure}`.toLowerCase();
+
+        if (record.dynamicFields?.length) {
+          for (const field of record.dynamicFields) {
+            recordText += ` ${field.key.toLowerCase()} ${field.value.toLowerCase()}`;
+          }
+        }
+      }
+
       switch (this.role) {
 
         case 'admin':
-        case 'patient':
           return (
             specialty.includes(value) ||
             specialistName.includes(value)
           );
 
+        case 'patient':
+          return (
+            specialty.includes(value) ||
+            specialistName.includes(value) ||
+            recordText.includes(value)
+          );
+
         case 'specialist':
           return (
             specialty.includes(value) ||
-            patientName.includes(value)
+            patientName.includes(value) ||
+            recordText.includes(value)
           );
 
         default:
@@ -278,11 +298,15 @@ export class AppointmentListPage {
   }
 
   get searchPlaceholder(): string {
-    if (this.role === 'patient') {
+
+    if (this.role === 'admin') {
       return 'Buscar por especialidad o especialista...';
     }
     if (this.role === 'specialist') {
-      return 'Buscar por especialidad o paciente...';
+      return 'Buscar por especialidad, paciente o historia clínica...';
+    }
+    if (this.role === 'patient') {
+      return 'Buscar por especialidad, especialista o historia clínica...';
     }
     return 'Buscar por especialidad o especialista...';
   }

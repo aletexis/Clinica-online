@@ -96,29 +96,66 @@
 	</h4>
 
 	<mat-dialog-content class="p-3 fs-6">
-		<p *ngIf="role !== 'patient'"><b>Paciente:</b> {{ getPatientName(selectedAppointment.patientUid) }}</p>
-		<p *ngIf="role !== 'specialist'"><b>Especialista:</b> {{ getSpecialistName(selectedAppointment.specialistUid) }}</p>
-		<p><b>Especialidad:</b> {{ selectedAppointment.specialty }}</p>
-		<p><b>Día:</b> {{ selectedAppointment.date }}</p>
-		<p><b>Horario:</b> {{ selectedAppointment.time }}</p>
-		<p><b>Estado:</b> {{ selectedAppointment.status | appointmentStatus }}</p>
-		<p *ngIf="selectedAppointment.adminCancellationComment"><b>Comentario de cancelación administrador:</b> {{
-			selectedAppointment.adminCancellationComment }}</p>
-		<p *ngIf="selectedAppointment.patientCancellationComment"><b>Comentario de cancelación paciente:</b> {{
-			selectedAppointment.patientCancellationComment }}</p>
-		<p *ngIf="selectedAppointment.specialistCancellationComment"><b>Comentario de cancelación especialista:</b> {{
-			selectedAppointment.specialistCancellationComment }}</p>
-		<p *ngIf="selectedAppointment.specialistRejectionComment"><b>Comentario rechazo:</b> {{
-			selectedAppointment.specialistRejectionComment }}</p>
-		<p *ngIf="role === 'admin'"><b>Comentario del especialista:</b> {{ selectedAppointment.specialistReview?.comment }}
+		<p *ngIf="role !== 'patient'">
+			<b>Paciente:</b>
+			{{ getPatientName(selectedAppointment.patientUid) }}
 		</p>
-		<p *ngIf="role === 'admin'"><b>Diagnóstico:</b> {{ selectedAppointment.specialistReview?.diagnosis }}
+		<p *ngIf="role !== 'specialist'">
+			<b>Especialista:</b>
+			{{ getSpecialistName(selectedAppointment.specialistUid) }}
 		</p>
-		<p *ngIf="role === 'admin'"><b>Comentario del paciente:</b> {{ selectedAppointment.patientRatingComment }}
+		<p>
+			<b>Especialidad:</b>
+			{{ selectedAppointment.specialty }}
 		</p>
-		<p *ngIf="selectedAppointment.adminCreatedForPatientUid"><b>Creado por administrador para:</b> {{
-			getPatientName(selectedAppointment.adminCreatedForPatientUid) }}</p>
-		<p><b>Creado en:</b> {{ selectedAppointment.createdAt | formatDate }} </p>
+		<p>
+			<b>Día:</b>
+			{{ selectedAppointment.date }}
+		</p>
+		<p>
+			<b>Horario:</b>
+			{{ selectedAppointment.time }}
+		</p>
+		<p>
+			<b>Estado:</b>
+			{{ selectedAppointment.status | appointmentStatus }}
+		</p>
+		<p *ngIf="selectedAppointment.adminCancellationComment">
+			<b>Comentario de cancelación administrador:</b>
+			{{ selectedAppointment.adminCancellationComment }}
+		</p>
+		<p *ngIf="selectedAppointment.patientCancellationComment">
+			<b>Comentario de cancelación paciente:</b>
+			{{ selectedAppointment.patientCancellationComment }}
+		</p>
+		<p *ngIf="selectedAppointment.specialistCancellationComment">
+			<b>Comentario de cancelación especialista:</b>
+			{{ selectedAppointment.specialistCancellationComment }}
+		</p>
+		<p *ngIf="selectedAppointment.specialistRejectionComment">
+			<b>Comentario rechazo:</b>
+			{{ selectedAppointment.specialistRejectionComment }}
+		</p>
+		<p *ngIf="role === 'admin' && selectedAppointment.specialistReview?.comment">
+			<b>Comentario del especialista:</b>
+			{{ selectedAppointment.specialistReview?.comment }}
+		</p>
+		<p *ngIf="role === 'admin' && selectedAppointment.specialistReview?.diagnosis">
+			<b>Diagnóstico:</b>
+			{{ selectedAppointment.specialistReview?.diagnosis }}
+		</p>
+		<p *ngIf="role === 'admin' && selectedAppointment.patientRatingComment">
+			<b>Comentario del paciente:</b>
+			{{ selectedAppointment.patientRatingComment }}
+		</p>
+		<p *ngIf="role !== 'patient' && selectedAppointment.adminCreatedForPatientUid">
+			<b>Creado por administrador para:</b>
+			{{ getPatientName(selectedAppointment.adminCreatedForPatientUid) }}
+		</p>
+		<p>
+			<b>Creado en:</b>
+			{{ selectedAppointment.createdAt | formatDate }}
+		</p>
 	</mat-dialog-content>
 	<mat-dialog-actions>
 		<button matButton="tonal" mat-dialog-close>Cerrar</button>
@@ -153,6 +190,7 @@
 		</button>
 	</mat-dialog-actions>
 </ng-template>
+
 
 <!-- Especialista -->
 
