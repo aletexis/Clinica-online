@@ -382,7 +382,7 @@
 
 			<mat-form-field appearance="outline" class="flex-grow-1">
 				<mat-label>Dato</mat-label>
-				<input matInput [formControl]="dynamicKey">
+				<input matInput [formControl]="dynamicKey" [disabled]="isMaxReached">
 
 				<mat-error *ngIf="dynamicKey.hasError('required')">
 					Ingresá un dato
@@ -399,7 +399,7 @@
 
 			<mat-form-field appearance="outline" class="flex-grow-1">
 				<mat-label>Valor</mat-label>
-				<input matInput [formControl]="dynamicValue">
+				<input matInput [formControl]="dynamicValue" [disabled]="isMaxReached">
 
 				<mat-error *ngIf="dynamicValue.hasError('required')">
 					Ingresá un valor
@@ -410,7 +410,7 @@
 				</mat-error>
 			</mat-form-field>
 
-			<button mat-flat-button color="primary" (click)="addDynamic()">
+			<button mat-flat-button color="primary" (click)="addDynamic()" [disabled]="isMaxReached">
 				<i class="fa-solid fa-plus"></i>
 			</button>
 		</div>

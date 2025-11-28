@@ -616,11 +616,17 @@ export class AppointmentListPage {
       });
   }
 
+  get isMaxReached(): boolean {
+    return this.dynamicArray.length >= this.maxDynamic;
+  }
+
   get dynamicArray(): FormArray {
     return this.clinicalForm.get('dynamic') as FormArray;
   }
 
   addDynamic() {
+    if (this.isMaxReached) return;
+
     if (!this.dynamicKey.value && !this.dynamicValue.value) return;
 
     if (this.dynamicKey.value && !this.dynamicValue.value) {
