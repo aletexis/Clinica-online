@@ -9,6 +9,12 @@ export const publicGuard: CanActivateFn = () => {
   const router = inject(Router);
   const alertService = inject(AlertService);
 
+  const roleToRoute: Record<string, string> = {
+    admin: 'admin',
+    specialist: 'especialista',
+    patient: 'paciente'
+  };
+
   return combineLatest([
     authService.userInitialized$,
     authService.user$
@@ -20,7 +26,7 @@ export const publicGuard: CanActivateFn = () => {
         return true;
       }
       alertService.info('Ya tenés una sesión iniciada');
-      router.navigateByUrl(`/dashboard/${user.role}`);
+      router.navigateByUrl(`/dashboard/${roleToRoute[user.role]}`);
       return false;
     })
   );

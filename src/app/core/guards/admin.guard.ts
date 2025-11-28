@@ -9,6 +9,12 @@ export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
   const alertService = inject(AlertService);
 
+  const roleToRoute: Record<string, string> = {
+    admin: 'admin',
+    specialist: 'especialista',
+    patient: 'paciente'
+  };
+
   return combineLatest([
     authService.userInitialized$,
     authService.user$
@@ -28,7 +34,7 @@ export const adminGuard: CanActivateFn = () => {
       if (user.role === 'admin') return true;
 
       alertService.error('No tenés permisos para acceder a esta sección');
-      router.navigate([`/dashboard/${user.role}`]);
+      router.navigate([`/dashboard/${roleToRoute[user.role]}`]);
       return false;
     })
   );

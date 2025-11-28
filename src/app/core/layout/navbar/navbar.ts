@@ -29,6 +29,12 @@ export class Navbar {
   authResolved = false;
   private subs: Subscription[] = [];
 
+  private roleToRoute: Record<string, string> = {
+    admin: 'admin',
+    specialist: 'especialista',
+    patient: 'paciente'
+  };
+
   ngOnInit() {
     const routeSub = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -57,7 +63,7 @@ export class Navbar {
   // Dashboard por rol
   get dashboardRoute(): string {
     if (!this.loggedInUser) return '/bienvenida';
-    return `/dashboard/${this.loggedInUser.role}`;
+    return `/dashboard/${this.roleToRoute[this.loggedInUser.role]}`;
   }
 
   get isOnDashboard(): boolean {

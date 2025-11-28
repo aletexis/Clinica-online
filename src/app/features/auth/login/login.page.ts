@@ -58,17 +58,6 @@ export class LoginPage {
     });
   }
 
-  //ale: borrar
-  // loadQuickAccessUsers() {
-  //   this.firestoreService
-  //     .getFiltered('users', 'isQuickAccess', true)
-  //     .pipe(take(1))
-  //     .subscribe(users => {
-  //       this.quickUsers = users;
-  //       console.log('Quick access users loaded:', this.quickUsers);
-  //     });
-  // }
-
   loadQuickAccessUsers() {
     this.firestoreService
       .getFiltered('users', 'isQuickAccess', true)
