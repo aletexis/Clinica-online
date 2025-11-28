@@ -426,22 +426,67 @@
 <!-- Paciente -->
 
 <!-- Dialog Encuesta -->
-<!-- surveyDialog -->
 <ng-template #surveyDialog>
 	<h4 class="app-text-primary fw-bold text-center text-uppercase m-4">
-		Completar Encuesta
+		Encuesta de atención
 	</h4>
 
-	<mat-dialog-content>
-		<p class="text-center">aaa </p>
-	</mat-dialog-content>
+	<form [formGroup]="surveyForm">
 
-	<mat-dialog-actions align="end" class="mt-3">
-		<button matButton="tonal" mat-dialog-close>Cancelar</button>
-		<button mat-flat-button color="primary" (click)="submitSurvey()">
-			Confirmar
-		</button>
-	</mat-dialog-actions>
+		<mat-dialog-content style="max-height: 70vh; overflow:auto">
+			<div class="row mb-5">
+				<label class="fw-semibold d-block mb-1">
+					¿Volvería a atenderse en este establecimiento?
+				</label>
+
+				<mat-radio-group formControlName="wouldReturn">
+					<mat-radio-button value="yes" class="me-3">Sí</mat-radio-button>
+					<mat-radio-button value="no">No</mat-radio-button>
+				</mat-radio-group>
+
+				<mat-error *ngIf="surveyForm.get('wouldReturn')?.invalid && surveyForm.get('wouldReturn')?.touched">
+					Seleccioná una opción
+				</mat-error>
+			</div>
+
+			<div class="row mb-5">
+				<label class="fw-semibold d-block mb-1">
+					¿Cómo valora la disponibilidad de horarios del establecimiento,
+					en relación a su disponibilidad?
+				</label>
+				<div class="d-flex align-items-center gap-3">
+					<span>1</span>
+					<mat-slider min="1" max="5" step="1" tickInterval="1" class="flex-grow-1">
+						<input matSliderThumb formControlName="scheduleRating" />
+					</mat-slider>
+					<span>5</span>
+				</div>
+			</div>
+
+			<div class="row mb-5">
+				<label class="fw-semibold d-block mb-1">
+					¿Usted está conforme con la calidad profesional del especialista?
+				</label>
+
+				<mat-radio-group formControlName="professionalQuality">
+					<mat-radio-button value="yes" class="me-3">Sí</mat-radio-button>
+					<mat-radio-button value="no">No</mat-radio-button>
+				</mat-radio-group>
+
+				<mat-error
+					*ngIf="surveyForm.get('professionalQuality')?.invalid && surveyForm.get('professionalQuality')?.touched">
+					Seleccioná una opción
+				</mat-error>
+			</div>
+		</mat-dialog-content>
+
+		<mat-dialog-actions align="end" class="mt-3">
+			<button mat-button mat-dialog-close>Cancelar</button>
+			<button mat-flat-button color="primary" (click)="submitSurvey()" [disabled]="surveyForm.invalid">
+				Confirmar
+			</button>
+		</mat-dialog-actions>
+	</form>
 </ng-template>
 
 <!-- Dialog Calificar -->

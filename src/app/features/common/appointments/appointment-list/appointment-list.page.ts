@@ -19,6 +19,8 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { ClinicalRecord } from '../../../../core/models/clinicalRecord';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
   selector: 'app-appointment-list.page',
@@ -36,7 +38,9 @@ import { ClinicalRecord } from '../../../../core/models/clinicalRecord';
     FormatDatePipe,
     StatusBadgeDirective,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
+    MatRadioModule,
+    MatSliderModule
   ],
   templateUrl: './appointment-list.page.html',
   styleUrl: './appointment-list.page.scss'
@@ -80,10 +84,10 @@ export class AppointmentListPage {
   @ViewChild('reviewDialog') reviewDialog!: TemplateRef<any>;
 
   @ViewChild('surveyDialog') surveyDialog!: TemplateRef<any>;
+  surveyForm!: FormGroup;
 
   @ViewChild('ratingDialog') ratingDialog!: TemplateRef<any>;
   patientRatingComment: string = '';
-
 
   constructor(
     private authService: AuthService,
@@ -127,6 +131,12 @@ export class AppointmentListPage {
       Validators.required,
       Validators.maxLength(20)
     ]);
+
+    this.surveyForm = this.fb.group({
+      wouldReturn: [null, Validators.required],
+      scheduleRating: [3, Validators.required],
+      professionalQuality: [null, Validators.required]
+    });
   }
 
   // Carga de turnos
@@ -371,6 +381,7 @@ export class AppointmentListPage {
   // Dialogs
 
   // Todos
+
   get isCommentTooLong() {
     return this.cancelComment.length >= this.maxCommentLength;
   }
@@ -645,11 +656,44 @@ export class AppointmentListPage {
 
   openSurveyDialog(app: Appointment) {
     this.selectedAppointment = app;
+
+    this.surveyForm.reset({
+      wouldReturn: null,
+      scheduleRating: 3,
+      professionalQuality: null
+    });
+
     this.dialog.open(this.surveyDialog, { width: '500px' });
   }
 
   submitSurvey() {
-    console.log();
+    if (!this.selectedAppointment) return;
+
+    if (this.surveyForm.invalid) {
+      this.surveyForm.markAllAsTouched();
+      return;
+    }
+
+    const data = this.surveyForm.value;
+
+    const updated = {
+      patientSurvey: {
+        wouldReturn: data.wouldReturn,
+        scheduleRating: data.scheduleRating,
+        professionalQuality: data.professionalQuality
+      }
+    };
+
+    this.firestoreService
+      .update('appointments', this.selectedAppointment.id!, updated)
+      .then(() => {
+        this.alertService.success('Encuesta enviada con éxito');
+        this.dialog.closeAll();
+        this.loadAppointmentsForRole();
+      })
+      .catch(() => {
+        this.alertService.error('Hubo un problema al enviar la encuesta');
+      });
   }
 
   openRatingDialog(app: Appointment) {
