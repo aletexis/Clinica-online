@@ -11,6 +11,7 @@ import { FirestoreService } from '../../../core/services/firestore.service';
 import { AlertService } from '../../../core/services/alert.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { LoadingService } from '../../../core/services/loading.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-specialist-availability',
@@ -35,6 +36,7 @@ export class SpecialistAvailabilityComponent {
   private alertService = inject(AlertService);
   private loadingService = inject(LoadingService);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   hours: string[] = [];
   days: DayAvailability[] = [];
@@ -48,8 +50,21 @@ export class SpecialistAvailabilityComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['existingAvailability'] && this.existingAvailability) {
-      const fbData = this.existingAvailability[0].availability;
+    if (changes['existingAvailability']) {
+
+      if (!this.existingAvailability || this.existingAvailability.length === 0) {
+        this.generateDays();
+        return;
+      }
+
+      const item = this.existingAvailability[0];
+
+      if (!item || !item.availability) {
+        this.generateDays();
+        return;
+      }
+
+      const fbData = item.availability;
 
       this.days = fbData.map((d: DayAvailability) => ({
         day: d.day,
@@ -175,6 +190,10 @@ export class SpecialistAvailabilityComponent {
 
       this.saved.emit();
       this.alertService.success('Disponibilidad guardada con éxito');
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 3500);
     } catch (err) {
       console.error(err);
       this.alertService.error('Hubo un problema al guardar la disponibilidad', 3000);
