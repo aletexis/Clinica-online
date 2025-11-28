@@ -27,6 +27,9 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+.vscode/extensions.json
+.vscode/launch.json
+.vscode/tasks.json
 
 # Miscellaneous
 /.angular/cache
@@ -36,6 +39,13 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Firebase (agregado)
+.firebase/
 
 # System files
 .DS_Store

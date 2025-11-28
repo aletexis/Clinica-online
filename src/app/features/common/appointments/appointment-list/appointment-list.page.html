@@ -3,14 +3,21 @@
 		Listado de Turnos
 	</h1>
 
-	<mat-form-field appearance="outline" class="w-100 mt-3">
+	<mat-form-field *ngIf="hasAppointments" appearance="outline" class="w-100 mt-3">
 		<mat-label>{{ searchPlaceholder }}</mat-label>
 		<input matInput type="text" (input)="onSearch($event)">
 	</mat-form-field>
 
+	<div *ngIf="!hasAppointments" class="text-center py-5 fs-5 text-muted">
+		Todavía no hay turnos.
+	</div>
+
+	<div *ngIf="hasAppointments && !hasFilteredAppointments" class="text-center py-5 fs-5 text-muted">
+		No se encontraron resultados para tu búsqueda.
+	</div>
 
 	<table class="table table-striped text-center align-middle">
-		<thead>
+		<thead *ngIf="hasFilteredAppointments">
 			<tr>
 				<th *ngIf="role !== 'patient'">Paciente</th>
 				<th *ngIf="role !== 'specialist'">Especialista</th>

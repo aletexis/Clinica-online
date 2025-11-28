@@ -240,6 +240,10 @@ export class AppointmentListPage {
       });
   }
 
+  get hasAppointments(): boolean {
+    return this.appointments.length > 0;
+  }
+
   // Filtro de busqueda
 
   onSearch(event: Event) {
@@ -317,6 +321,14 @@ export class AppointmentListPage {
 
   getSpecialistName(uid: string): string {
     return this.specialistsList.find(s => s.uid === uid)?.name || '';
+  }
+
+  get hasFilteredAppointments(): boolean {
+    return this.filteredAppointments.length > 0;
+  }
+
+  get isSearching(): boolean {
+    return this.searchTerm.trim().length > 0;
   }
 
   // Definicion de acciones
